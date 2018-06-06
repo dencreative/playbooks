@@ -6,10 +6,12 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import {WriteModal, DeleteModal, EditModal, ReadModal, MODALS} from './Modals';
+import {ReadModal, MODALS} from './Modals';
 import ToolBar from './ToolBar';
 import Table from './Table';
 import Alert from './Alert';
+
+import { postItem } from './requests'
 
 
 const ITEMS = ["Apples",
@@ -394,11 +396,15 @@ class Main extends Component {
 
   // Update the entry if confirmed.
   updateItem(newItem) {
+
+    // Post data to API.
+    postItem(newItem)
+
     const index = this.state.allItems.indexOf(this.state.item)
     const list = this.state.allItems
 
     if (index !== -1) list[index] = newItem
-      else list.push(newItem)
+    else list.push(newItem)
 
     this.setState({
       item: '',
