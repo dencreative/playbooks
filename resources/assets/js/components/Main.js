@@ -425,7 +425,7 @@ class Main extends Component {
           <Table   items={(!query) ? this.state.allItems : this.state.displayItems}
                    handle = {this.handleChange.bind(this)}/>
           
-          <Alert type="danger" warn={this.state.displayItems.length===0}/> 
+          <Alert type="danger" warn={this.state.displayItems.length===0 && query}/> 
 
         </div>
         <Modal animation = {false}

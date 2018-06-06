@@ -5,8 +5,8 @@ import { Alert as A } from 'react-bootstrap';
 
 export default function Alert(props) {
 
-	const test = (props) => {
-		switch (props) {
+	const test = (type) => {
+		switch (type) {
 			case 'danger': return <div><strong>Sorry!</strong> No items found.</div>
 			case 'info': return <div><strong>Success!</strong> Changes saved.</div>
 		}
@@ -15,7 +15,7 @@ export default function Alert(props) {
 	if (!props.warn) return null;
 
   return (
-    <A bsStyle={props.type}>
+    <A bsStyle={props.type} className='alert'>
       {test(props.type)}
     </A>
   )

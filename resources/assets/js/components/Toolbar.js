@@ -17,7 +17,7 @@ export default function ToolBar(props) {
         <button className = "btn btn-primary" 
                 value="Create" 
                 onClick={props.handle.bind(this, 'write')}>
-                Add
+                Add Entry
         </button>
       </div> 
     </div>

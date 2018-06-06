@@ -10415,7 +10415,8 @@ p {
   text-align: center;
 }
 
-.navbar-laravel {
+nav.navbar-laravel {
+  padding: 10px 0;
   background-color: #fff;
   -webkit-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
           box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
@@ -10434,8 +10435,8 @@ p {
           justify-content: flex-end;
 }
 
-table {
-  margin-top: 5px;
+table.playbook-table {
+  margin: 1.5rem 0;
 }
 
 .row .buttons {
@@ -10454,9 +10455,5 @@ table .buttons * {
 
 .modal-backdrop {
   opacity: 0.5 !important;
-}
-
-icons {
-  color: red;
 }
 

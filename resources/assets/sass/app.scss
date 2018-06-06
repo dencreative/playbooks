@@ -13,9 +13,11 @@ p {
  text-align: center;
 }
 
-.navbar-laravel {
+nav.navbar-laravel {
+	padding: 10px 0;
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+
 }
 
 .buttons {
@@ -24,8 +26,8 @@ p {
 	justify-content:flex-end;
 }
 
-table {
-	margin-top:5px;
+table.playbook-table {
+	margin: 1.5rem 0;
 }
 
 .row .buttons {
@@ -37,16 +39,10 @@ table {
 	margin-left:5px;
 }
 
-
 table .buttons * {
 	margin-right:5px;
 }
 
-.modal-backdrop
-{
+.modal-backdrop {
     opacity:0.5 !important;
-}
-
-icons {
-	color:red;
 }
