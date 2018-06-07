@@ -63,7 +63,7 @@ export class ReadModal extends MyModal {
     return (
       <Modal animation = {false} show={this.props.show} onHide={this.handleClose.bind(this)}>
           <Modal.Body>
-            <p className='text-justify'>{this.props.item[0]}</p>
+            <p className='text-justify'>{this.props.item.description}</p>
           </Modal.Body>
           <Modal.Footer>
             <Button onClick={this.handleClose.bind(this)}>Close</Button>

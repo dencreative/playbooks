@@ -36,7 +36,7 @@ class Main extends Component {
     .then(data => {
       let list = []
       data.map(item => {
-          if (item.description) { list.push([item.description, item.id]) }
+          if (item.description) { list.push({id: item.id, title:item.title, description: item.description}) }
       })
     // Reverse to make newest entries appear at the top.  
     this.setState({products:list.reverse()})
@@ -48,14 +48,12 @@ class Main extends Component {
     const query = event.target.value.toLowerCase();
     const list = this.state.products
 
-    const newList = list.filter(item => item[0].toLowerCase().includes(query))
+    const newList = list.filter(item => item.description.toLowerCase().includes(query))
     this.setState({displayItems:newList, query:query})
   }
 
   // Handles changes in child components.
   handleChange(mode, index, id) {
-
-    (id) ? console.log('handling id ' + id + "at index: " + index) : console.log('new id')
     this.setState({mode: mode, 
                    item: (!this.state.query && mode !== 'write') ? this.state.products[index] : this.state.displayItems[index], 
                    showModal: true,})
@@ -78,7 +76,7 @@ class Main extends Component {
         displayItems: this.state.displayItems.filter(el => el !== item)
     })
 
-    fetch(API + PUT_QUERY + this.state.item[1], {
+    fetch(API + PUT_QUERY + this.state.item.id, {
       method: 'DELETE',
       headers: {
         'Accept': 'application/json',
@@ -90,14 +88,14 @@ class Main extends Component {
   // Update the entry if confirmed.
   updateItem(newItem) {
 
-    const id = this.state.item[1]
+    const id = this.state.item.id
 
     let list = this.state.products;
     let displayList = this.state.displayItems
 
     const f = (e) => {
-        if (e[0] == this.state.item[0]) { 
-            e[0] = newItem }
+        if (e == this.state.item) { 
+            e.description = newItem }
         }
 
     list.map(f)
@@ -122,19 +120,18 @@ class Main extends Component {
         availability: true,
         description: newItem
       })
-    }).then(response => console.log(response))
-
-
+    })
   }
 
   // Add entry if confirmed.
   addItem(newItem) {
 
+
     let list =  this.state.products;
     let displayList = this.state.displayItems
-    let newId = list[list.length-1][1] + 1;
+    let newId = list[0].id + 1;
 
-    const n = [newItem, newId]
+    const n = {description:newItem, title:newItem, id:newId}
 
     // Push to display first.
     displayList.unshift(n)
@@ -161,8 +158,7 @@ class Main extends Component {
         availability: true,
         description: newItem
       })
-    }).then(response => console.log(response))
-
+    })
   }
 
 

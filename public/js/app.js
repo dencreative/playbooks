@@ -22888,12 +22888,17 @@ var TableItem = function (_Component) {
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           'td',
           null,
-          this.props.item
+          this.props.id
         ),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           'td',
           null,
-          this.props.id
+          this.props.description
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'td',
+          null,
+          this.props.description
         ),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           'td',
@@ -45229,7 +45234,7 @@ var Main = function (_Component) {
         var list = [];
         data.map(function (item) {
           if (item.description) {
-            list.push([item.description, item.id]);
+            list.push({ id: item.id, title: item.title, description: item.description });
           }
         });
         // Reverse to make newest entries appear at the top.  
@@ -45246,7 +45251,7 @@ var Main = function (_Component) {
       var list = this.state.products;
 
       var newList = list.filter(function (item) {
-        return item[0].toLowerCase().includes(query);
+        return item.description.toLowerCase().includes(query);
       });
       this.setState({ displayItems: newList, query: query });
     }
@@ -45256,8 +45261,6 @@ var Main = function (_Component) {
   }, {
     key: 'handleChange',
     value: function handleChange(mode, index, id) {
-
-      id ? console.log('handling id ' + id + "at index: " + index) : console.log('new id');
       this.setState({ mode: mode,
         item: !this.state.query && mode !== 'write' ? this.state.products[index] : this.state.displayItems[index],
         showModal: true });
@@ -45290,7 +45293,7 @@ var Main = function (_Component) {
         })
       });
 
-      fetch(API + PUT_QUERY + this.state.item[1], {
+      fetch(API + PUT_QUERY + this.state.item.id, {
         method: 'DELETE',
         headers: {
           'Accept': 'application/json',
@@ -45308,14 +45311,14 @@ var Main = function (_Component) {
     value: function updateItem(newItem) {
       var _this3 = this;
 
-      var id = this.state.item[1];
+      var id = this.state.item.id;
 
       var list = this.state.products;
       var displayList = this.state.displayItems;
 
       var f = function f(e) {
-        if (e[0] == _this3.state.item[0]) {
-          e[0] = newItem;
+        if (e == _this3.state.item) {
+          e.description = newItem;
         }
       };
 
@@ -45341,8 +45344,6 @@ var Main = function (_Component) {
           availability: true,
           description: newItem
         })
-      }).then(function (response) {
-        return console.log(response);
       });
     }
 
@@ -45354,12 +45355,12 @@ var Main = function (_Component) {
 
       var list = this.state.products;
       var displayList = this.state.displayItems;
-      var newId = list[list.length - 1][1] + 1;
+      var newId = list[0].id + 1;
 
-      var n = [newItem, newId];
+      var n = { description: newItem, title: newItem, id: newId
 
-      // Push to display first.
-      displayList.unshift(n);
+        // Push to display first.
+      };displayList.unshift(n);
 
       // If query is empty or missing in products - add.
       if (!list.includes(n) || !this.state.query) list.unshift(n);
@@ -45383,8 +45384,6 @@ var Main = function (_Component) {
           availability: true,
           description: newItem
         })
-      }).then(function (response) {
-        return console.log(response);
       });
     }
   }, {
@@ -64961,7 +64960,7 @@ var ReadModal = function (_MyModal2) {
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             'p',
             { className: 'text-justify' },
-            this.props.item[0]
+            this.props.item.description
           )
         ),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -77336,17 +77335,22 @@ function Table(props) {
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           'th',
           { scope: 'col' },
-          'Item'
-        ),
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          'th',
-          { scope: 'col' },
           'ID'
         ),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           'th',
           { scope: 'col' },
-          'Action'
+          'Title'
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'th',
+          { scope: 'col' },
+          'Description'
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'th',
+          { scope: 'col' },
+          'Actions'
         )
       )
     ),
@@ -77354,8 +77358,8 @@ function Table(props) {
       'tbody',
       null,
       props.items.map(function (item, index) {
-        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__TableItem__["a" /* default */], { item: item[0],
-          id: item[1],
+        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__TableItem__["a" /* default */], { description: item.description,
+          id: item.id,
           index: index,
           handle: props.handle.bind(_this),
           key: index });

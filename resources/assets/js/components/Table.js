@@ -7,16 +7,17 @@ export default function Table(props) {
 		<table className="table table-bordered table-striped playbook-table">
       <thead>
         <tr>
-          <th scope="col">Item</th>
           <th scope="col">ID</th>
-          <th scope="col">Action</th>
+          <th scope="col">Title</th>
+          <th scope="col">Description</th>
+          <th scope="col">Actions</th>
         </tr>
       </thead>
       <tbody>
         {
           props.items.map((item,index) => 
-            <TableItem item={item[0]}
-                       id={item[1]} 
+            <TableItem description={item.description}
+                       id={item.id} 
                        index={index} 
                        handle={props.handle.bind(this)}
                        key={index}/>) 
