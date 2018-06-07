@@ -6,11 +6,6 @@ import TableItem from './TableItem';
 export default function ToolBar(props) {
 
   const onClick = () => props.handle.bind(this, 'write')
-  const handleKeyPress = (e) => { console.log(e) }
-
-
-
-
 	return(
 		<div className="row">
       <div className="col-sm"> 
@@ -23,7 +18,6 @@ export default function ToolBar(props) {
       <div className="col-sm buttons">
         <button className = "btn btn-primary" 
                 value="Create" 
-                onKeyDown={handleKeyPress()}
                 onClick={onClick()}>
                 Add Entry
         </button>

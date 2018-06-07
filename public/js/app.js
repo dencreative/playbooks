@@ -22928,7 +22928,7 @@ var TableItem = function (_Component) {
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(146);
-module.exports = __webpack_require__(342);
+module.exports = __webpack_require__(343);
 
 
 /***/ }),
@@ -45173,7 +45173,6 @@ module.exports = function spread(callback) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ToolBar__ = __webpack_require__(339);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Table__ = __webpack_require__(340);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__Alert__ = __webpack_require__(341);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__requests__ = __webpack_require__(344);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -45187,8 +45186,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 // Put any other imports below so that CSS from your
 // components takes precedence over default styles.
-
-
 
 
 
@@ -77283,10 +77280,6 @@ function ToolBar(props) {
   var onClick = function onClick() {
     return props.handle.bind(_this, 'write');
   };
-  var handleKeyPress = function handleKeyPress(e) {
-    console.log(e);
-  };
-
   return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
     'div',
     { className: 'row' },
@@ -77306,7 +77299,6 @@ function ToolBar(props) {
         'button',
         { className: 'btn btn-primary',
           value: 'Create',
-          onKeyDown: handleKeyPress(),
           onClick: onClick() },
         'Add Entry'
       )
@@ -77426,47 +77418,11 @@ function Alert(props) {
 }
 
 /***/ }),
-/* 342 */
+/* 342 */,
+/* 343 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 343 */,
-/* 344 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* unused harmony export postItem */
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react_dom__);
-
-
-
-var URL = 'website.com';
-
-function postItem(item) {
-
-  console.log('posting data');
-  // Default options are marked with *
-  return fetch(URL, {
-    body: JSON.stringify(item),
-    cache: 'no-cache',
-    credentials: 'same-origin',
-    headers: {
-      'user-agent': 'Mozilla/4.0 MDN Example',
-      'content-type': 'application/json'
-    },
-    method: 'POST',
-    mode: 'cors',
-    redirect: 'follow',
-    referrer: 'no-referrer'
-  }).then(function (response) {
-    return response.json();
-  }); // parses response to JSON
-}
 
 /***/ })
 /******/ ]);

@@ -4,6 +4,3 @@
         <div id="example"></div>
 @endsection
 
-
-<!-- welcome.blade.php -->
-

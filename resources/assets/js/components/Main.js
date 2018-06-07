@@ -11,8 +11,6 @@ import ToolBar from './ToolBar';
 import Table from './Table';
 import Alert from './Alert';
 
-import { postItem } from './requests'
-
 const API = 'https://den-playbooks.app/api/';
 const INDEX_QUERY = 'products';
 const POST_QUERY = 'products';
@@ -31,17 +29,17 @@ class Main extends Component {
   }
 
   componentWillMount() {
-      // Get all items from db.
-      // Bunch up into 2-len arrays [item, id]
-      fetch(API + INDEX_QUERY)
-      .then(response => response.json())
-      .then(data => {
-        let list = []
-        data.map(item => {
-            if (item.description) { list.push([item.description, item.id]) }
-        })
-      // Reverse to make newest entries appear at the top.  
-      this.setState({products:list.reverse()})
+    // Get all items from db.
+    // Bunch up into 2-len arrays [item, id]
+    fetch(API + INDEX_QUERY)
+    .then((response) => response.json())
+    .then(data => {
+      let list = []
+      data.map(item => {
+          if (item.description) { list.push([item.description, item.id]) }
+      })
+    // Reverse to make newest entries appear at the top.  
+    this.setState({products:list.reverse()})
     })
   }
 
