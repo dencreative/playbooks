@@ -23,10 +23,6 @@ export class WriteModal extends MyModal {
     this.props.addItem(this.state.query)
   }
 
-  updateItem() {
-    this.props.updateItem(this.state.query)
-  }
-
   handleChange(event) {
     this.setState({
       query: event.target.value
@@ -35,7 +31,7 @@ export class WriteModal extends MyModal {
 
   render() {
     return (
-      <Modal animation = {this.props.animation} show={this.props.show} onHide={this.handleClose.bind(this)}>
+      <Modal animation = {false} show={this.props.show} onHide={this.handleClose.bind(this)}>
           <Modal.Body>
             <FormGroup controlId="formControlsTextarea">
               <ControlLabel>Edit your component.</ControlLabel>
@@ -54,7 +50,7 @@ export class WriteModal extends MyModal {
 export class ReadModal extends MyModal {
   render() {
     return (
-      <Modal animation = {this.props.animation} show={this.props.show} onHide={this.handleClose.bind(this)}>
+      <Modal animation = {false} show={this.props.show} onHide={this.handleClose.bind(this)}>
           <Modal.Body>
             <p className = 'text-justify'>{this.props.item}</p>
           </Modal.Body>
@@ -74,7 +70,7 @@ export class DeleteModal extends MyModal {
 
   render() {
     return (
-      <Modal animation = {this.props.animation} show={this.props.show} onHide={this.handleClose.bind(this)}>
+      <Modal animation = {false} show={this.props.show} onHide={this.handleClose.bind(this)}>
         <Modal.Body>
             <p className = 'text-justify'>Are you sure you want to remove this entry?</p>
           </Modal.Body>
@@ -108,7 +104,7 @@ export class EditModal extends MyModal {
 
   render() {
     return (
-      <Modal animation = {this.props.animation} show={this.props.show} onHide={this.handleClose.bind(this)}>
+      <Modal animation = {false} show={this.props.show} onHide={this.handleClose.bind(this)}>
           <Modal.Body>
             <FormGroup controlId="formControlsTextarea">
               <ControlLabel>Edit your component.</ControlLabel>

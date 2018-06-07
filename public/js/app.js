@@ -45212,10 +45212,8 @@ var Main = function (_Component) {
 
     _this.state = {
       mode: '', query: '', item: '',
-      allItems: ITEMS,
       displayItems: [],
       products: [],
-      productIds: [],
       showModal: false
     };
     return _this;
@@ -45263,7 +45261,7 @@ var Main = function (_Component) {
 
       id ? console.log('handling id ' + id + "at index: " + index) : console.log('new id');
       this.setState({ mode: mode,
-        item: !this.state.query && mode !== 'write' ? this.state.products[index][0] : this.state.displayItems[index],
+        item: !this.state.query && mode !== 'write' ? this.state.products[index] : this.state.displayItems[index],
         showModal: true });
     }
 
@@ -45287,7 +45285,7 @@ var Main = function (_Component) {
         item: '',
         showModal: false,
         products: this.state.products.filter(function (el) {
-          return el[0] !== item;
+          return el !== item;
         }),
         displayItems: this.state.displayItems.filter(function (el) {
           return el !== item;
@@ -45300,33 +45298,50 @@ var Main = function (_Component) {
   }, {
     key: 'updateItem',
     value: function updateItem(newItem) {
-
-      console.log('diree');
+      var _this3 = this;
 
       var list = this.state.products;
-      var newId = list[list.length - 1][1] + 1;
-      var currentItem = this.state.item;
+      var displayList = this.state.displayItems;
 
-      list.map(function (e) {
-        if (e[0] === currentItem) e[0] = newItem;
-      });
+      var newId = list[list.length - 1][1] + 1;
+
+      var f = function f(e) {
+        if (e[0] == _this3.state.item[0]) {
+          e[0] = newItem;
+        }
+      };
+
+      list.map(f);
+      displayList.map(f);
 
       this.setState({
         products: list,
+        displayItems: displayList,
         showModal: false
       });
     }
+
+    // Add entry if confirmed.
+
   }, {
     key: 'addItem',
     value: function addItem(newItem) {
 
       var list = this.state.products;
+      var displayList = this.state.displayItems;
       var newId = list[list.length - 1][1] + 1;
 
-      list.push([newItem, newId]);
+      var n = [newItem, newId];
+
+      // Push to display first.
+      displayList.push(n);
+
+      // If query is empty or missing in products - add.
+      if (!list.includes(n) || !this.state.query) list.push(n);
 
       this.setState({
         products: list,
+        displayItems: displayList,
         showModal: false
       });
     }
@@ -45350,14 +45365,10 @@ var Main = function (_Component) {
           __WEBPACK_IMPORTED_MODULE_2_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__ToolBar__["a" /* default */], { buildList: this.buildList.bind(this),
             handle: this.handleChange.bind(this) }),
           __WEBPACK_IMPORTED_MODULE_2_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__Table__["a" /* default */], { items: items,
-            ids: this.state.products.map(function (e) {
-              return e.id;
-            }),
             handle: this.handleChange.bind(this) }),
           __WEBPACK_IMPORTED_MODULE_2_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7__Alert__["a" /* default */], { type: 'danger', warn: this.state.displayItems.length === 0 && query })
         ),
-        __WEBPACK_IMPORTED_MODULE_2_react___default.a.createElement(Modal, { animation: false,
-          item: this.state.item,
+        __WEBPACK_IMPORTED_MODULE_2_react___default.a.createElement(Modal, { item: this.state.item,
           show: this.state.showModal,
           handleCloseModal: this.handleCloseModal.bind(this),
           removeItem: this.removeItem.bind(this),
@@ -64828,11 +64839,6 @@ var WriteModal = function (_MyModal) {
       this.props.addItem(this.state.query);
     }
   }, {
-    key: 'updateItem',
-    value: function updateItem() {
-      this.props.updateItem(this.state.query);
-    }
-  }, {
     key: 'handleChange',
     value: function handleChange(event) {
       this.setState({
@@ -64844,7 +64850,7 @@ var WriteModal = function (_MyModal) {
     value: function render() {
       return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["f" /* Modal */],
-        { animation: this.props.animation, show: this.props.show, onHide: this.handleClose.bind(this) },
+        { animation: false, show: this.props.show, onHide: this.handleClose.bind(this) },
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["f" /* Modal */].Body,
           null,
@@ -64894,7 +64900,7 @@ var ReadModal = function (_MyModal2) {
     value: function render() {
       return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["f" /* Modal */],
-        { animation: this.props.animation, show: this.props.show, onHide: this.handleClose.bind(this) },
+        { animation: false, show: this.props.show, onHide: this.handleClose.bind(this) },
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["f" /* Modal */].Body,
           null,
@@ -64939,7 +64945,7 @@ var DeleteModal = function (_MyModal3) {
     value: function render() {
       return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["f" /* Modal */],
-        { animation: this.props.animation, show: this.props.show, onHide: this.handleClose.bind(this) },
+        { animation: false, show: this.props.show, onHide: this.handleClose.bind(this) },
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["f" /* Modal */].Body,
           null,
@@ -65001,7 +65007,7 @@ var EditModal = function (_MyModal4) {
     value: function render() {
       return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["f" /* Modal */],
-        { animation: this.props.animation, show: this.props.show, onHide: this.handleClose.bind(this) },
+        { animation: false, show: this.props.show, onHide: this.handleClose.bind(this) },
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["f" /* Modal */].Body,
           null,

@@ -192,10 +192,8 @@ class Main extends Component {
     super(props);
     this.state = {
        mode: '',query: '',item: '',
-       allItems: ITEMS,
        displayItems: [],
        products: [],
-       productIds: [],
        showModal : false,
     }
   }
@@ -227,8 +225,8 @@ class Main extends Component {
   handleChange(mode, index, id) {
 
     (id) ? console.log('handling id ' + id + "at index: " + index) : console.log('new id')
-    this.setState({mode:mode, 
-                   item: (!this.state.query && mode !== 'write') ? this.state.products[index][0] : this.state.displayItems[index], 
+    this.setState({mode: mode, 
+                   item: (!this.state.query && mode !== 'write') ? this.state.products[index] : this.state.displayItems[index], 
                    showModal: true,})
   }
 
@@ -245,7 +243,7 @@ class Main extends Component {
     this.setState({
         item:'',
         showModal:false,
-        products: this.state.products.filter(el => el[0] !== item),
+        products: this.state.products.filter(el => el !== item),
         displayItems: this.state.displayItems.filter(el => el !== item)
     })
   }
@@ -253,31 +251,44 @@ class Main extends Component {
   // Update the entry if confirmed.
   updateItem(newItem) {
 
-    console.log('diree')
-
     let list = this.state.products;
-    let newId = list[list.length-1][1] + 1;
-    const currentItem = this.state.item
+    let displayList = this.state.displayItems
 
-    list.map(e => {
-        if (e[0]===currentItem) e[0] = newItem
-    })
-    
+    let newId = list[list.length-1][1] + 1;
+
+    const f = (e) => {
+        if (e[0] == this.state.item[0]) { 
+            e[0] = newItem }
+        }
+
+    list.map(f)
+    displayList.map(f)
+
     this.setState({
       products: list,
+      displayItems:displayList,
       showModal: false,
     })
   }
 
+  // Add entry if confirmed.
   addItem(newItem) {
 
-    let list = this.state.products;
+    let list =  this.state.products;
+    let displayList = this.state.displayItems
     let newId = list[list.length-1][1] + 1;
 
-    list.push([newItem, newId])
+    const n = [newItem, newId]
+
+    // Push to display first.
+    displayList.push(n)
+
+    // If query is empty or missing in products - add.
+    if (!list.includes(n) || !this.state.query) list.push(n)
 
     this.setState({
       products: list,
+      displayItems:displayList,
       showModal: false,
     })
 
@@ -301,14 +312,12 @@ class Main extends Component {
                    handle={this.handleChange.bind(this)}/>
 
           <Table   items={items}
-                   ids={this.state.products.map(e => e.id)} 
                    handle = {this.handleChange.bind(this)}/>
           
           <Alert type="danger" warn={this.state.displayItems.length===0 && query}/> 
 
         </div>
-        <Modal animation = {false}
-               item = {this.state.item}
+        <Modal item = {this.state.item}
                show={this.state.showModal} 
                handleCloseModal={this.handleCloseModal.bind(this)}
                removeItem={this.removeItem.bind(this)}
