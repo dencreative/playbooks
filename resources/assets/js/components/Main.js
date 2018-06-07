@@ -183,198 +183,53 @@ const ITEMS = ["Apples",
          "Grlanola",
          "Halsh Browns"]
 
+const API = 'https://den-playbooks.app/api/';
+const INDEX_QUERY = 'products';
+
 class Main extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      'mode': '','query': '','item': '',
-      'allItems': ["Apples",
-         "Broccoli",
-         "Chghicken",
-         "Duckg",
-         "Eggs",
-         "Fish",
-         "Grganola",
-         "Hasgh Browns",
-         "Applges",
-         "Broccgoli",
-         "Chickegn",
-         "Duck",
-         "gEggs",
-         "gFish",
-         "gGranola",
-         "gHash Browns",
-         "gApples",
-         "Bgroccoli",
-         "jgChicken",
-         "jDuck",
-         "gEggs",
-         "ggFish",
-         "gGranola",
-         "gHash Browns",
-         "Aghpples",
-         "Brhoccoli",
-         "Chjicken",
-         "Dujck",
-         "Eghgs",
-         "Fhish",
-         "Ghranola",
-         "Hhash Browns",
-         "Ahpples",
-         "Bhroccoli",
-         "Chhicken",
-         "Dhuck",
-         "Ehggs",
-         "Fhish",
-         "Ghranola",
-         "Hhash Browns",
-         "Ahpples",
-         "Bhroccoli",
-         "Chhicken",
-         "Dhguck",
-         "Eggggs",
-         "Figsh",
-         "Grganola",
-         "Hagsh Browns",
-         "Apttrples",
-         "Broyccoli",
-         "Chijcken",
-         "Ducjk",
-         "Eggjs",
-         "Fisjh",
-         "Grajnola",
-         "Hasjh Browns",
-         "Appjles",
-         "Brojccoli",
-         "Chijcken",
-         "Dujcjk",
-         "Egjgs",
-         "Fijsh",
-         "Grjanola",
-         "Hajsh Browns",
-         "Apjples",
-         "Brjoccoli",
-         "Chjicken",
-         "Duckk",
-         "Eggks",
-         "Fislh",
-         "Gralnola",
-         "Haslh Browns",
-         "Applles",
-         "Brolccoli",
-         "Chilcken",
-         "Duclk",
-         "Egg;s",
-         "Fiskh",
-         "Grajnola",
-         "Hashh Browns",
-         "Applges",
-         "Broccgoli",
-         "Chicken",
-         "Duchk",
-         "Egghs",
-         "Fisjh",
-         "Grajnola",
-         "Hasjh Browns",
-         "Appkles",
-         "Brojkccoli",
-         "Chickken",
-         "Duckk",
-         "Eggs",
-         "Fiksh",
-         "Grkanola",
-         "Haksh Browns",
-         "Apkples",
-         "Brkoccoli",
-         "Chkicken",
-         "Dukck",
-         "Egkgs",
-         "Fiksh",
-         "Grkanola",
-         "Haksh Browns",
-         "Apkples",
-         "Brkoccoli",
-         "Chllicken",
-         "Duclk",
-         "Eggls",
-         "Fislh",
-         "Glranola",
-         "Hlash Browns",
-         "Alpples",
-         "Blroccoli",
-         "Clhicken",
-         "Dluck",
-         "Elggs",
-         "Flish",
-         "Gl;ranola",
-         "Ha;sh Browns",
-         "Ap;ples",
-         "Br;occoli",
-         "Ch;icken",
-         "Du;ck",
-         "Eg;gs",
-         "Fi;sh",
-         "Gr;anola",
-         "Ha;sh Browns",
-         "Ap;ples",
-         "Bro'ccoli",
-         "Chi'cken",
-         "Duc'k",
-         "Egg's",
-         "Fis'h",
-         "Grajnola",
-         "Hasjh Browns",
-         "Appljes",
-         "Broccjoli",
-         "Chickjen",
-         "Djuck",
-         "Ejggs",
-         "Fjish",
-         "Gjranola",
-         "Hjash Browns",
-         "Ajpples",
-         "Bjroccoli",
-         "Cjhicken",
-         "Djuck",
-         "Ejggs",
-         "Fjish",
-         "Gjranola",
-         "Hkash Browns",
-         "Akpples",
-         "Bkroccoli",
-         "Ckhicken",
-         "Dkuck",
-         "Ekggs",
-         "Fkish",
-         "Gkranola",
-         "Hkash Browns",
-         "Akpples",
-         "Bkroccoli",
-         "Ckhicken",
-         "Dkluck",
-         "Eglgs",
-         "Filsh",
-         "Grlanola",
-         "Halsh Browns"],
-      'displayItems': [],
-      'showModal' : false
+       mode: '',query: '',item: '',
+       allItems: ITEMS,
+       displayItems: [],
+       products: [],
+       productIds: [],
+       showModal : false,
     }
+  }
+
+  componentWillMount() {
+      // Get all items from db.
+      // Bunch up into 2-len arrays [item, id]
+      fetch(API + INDEX_QUERY)
+      .then(response => response.json())
+      .then(data => {
+        let list = []
+        data.map(item => {
+            if (item.description) { list.push([item.description, item.id]) }
+        })
+      this.setState({products:list})
+    })
   }
 
   // Update query state.
   buildList(event) {
     const query = event.target.value.toLowerCase();
-    const list = this.state.allItems    
-    const newList = list.filter(item => item.toLowerCase().includes(query))
+    const list = this.state.products
+
+    const newList = list.filter(item => item[0].toLowerCase().includes(query))
     this.setState({displayItems:newList, query:query})
   }
 
   // Handles changes in child components.
-  handleChange(mode, index) {
+  handleChange(mode, index, id) {
+
+    (id) ? console.log('handling id ' + id + "at index: " + index) : console.log('new id')
     this.setState({mode:mode, 
-                   item: (!this.state.query) ? this.state.allItems[index] : this.state.displayItems[index], 
-                   showModal: true})
+                   item: (!this.state.query && mode !== 'write') ? this.state.products[index][0] : this.state.displayItems[index], 
+                   showModal: true,})
   }
 
   // Closing modal.
@@ -384,12 +239,13 @@ class Main extends Component {
 
   // Delete the entry if confirmed.
   removeItem() {
+    console.log("Removing: " + this.state.item)
+    
     const item = this.state.item
-    console.log('Removing: ' + item)
     this.setState({
         item:'',
         showModal:false,
-        allItems: this.state.allItems.filter(el => el !== item),
+        products: this.state.products.filter(el => el[0] !== item),
         displayItems: this.state.displayItems.filter(el => el !== item)
     })
   }
@@ -397,38 +253,55 @@ class Main extends Component {
   // Update the entry if confirmed.
   updateItem(newItem) {
 
-    // Post data to API.
-    postItem(newItem)
+    console.log('diree')
 
-    const index = this.state.allItems.indexOf(this.state.item)
-    const list = this.state.allItems
+    let list = this.state.products;
+    let newId = list[list.length-1][1] + 1;
+    const currentItem = this.state.item
 
-    if (index !== -1) list[index] = newItem
-    else list.push(newItem)
+    list.map(e => {
+        if (e[0]===currentItem) e[0] = newItem
+    })
+    
+    this.setState({
+      products: list,
+      showModal: false,
+    })
+  }
+
+  addItem(newItem) {
+
+    let list = this.state.products;
+    let newId = list[list.length-1][1] + 1;
+
+    list.push([newItem, newId])
 
     this.setState({
-      item: '',
+      products: list,
       showModal: false,
-      allItems: list,
     })
+
   }
 
 
   render() {
     const query = this.state.query
-    const items = (!query) ? this.state.allItems : this.state.displayItems;
+
+    // Decides view: initial (display all) or query (display sorted.)
+    const items = (!query) ? this.state.products : this.state.displayItems;
+
+    // Decides the type of modal at runtime.
     const Modal = (this.state.mode === '') ? ReadModal : MODALS[this.state.mode]
 
     return (
       <div>
         <div className="container-fluid">
           
-          <Alert type="info"/>
-
           <ToolBar buildList={this.buildList.bind(this)} 
                    handle={this.handleChange.bind(this)}/>
 
-          <Table   items={(!query) ? this.state.allItems : this.state.displayItems}
+          <Table   items={items}
+                   ids={this.state.products.map(e => e.id)} 
                    handle = {this.handleChange.bind(this)}/>
           
           <Alert type="danger" warn={this.state.displayItems.length===0 && query}/> 
@@ -439,7 +312,8 @@ class Main extends Component {
                show={this.state.showModal} 
                handleCloseModal={this.handleCloseModal.bind(this)}
                removeItem={this.removeItem.bind(this)}
-               updateItem={this.updateItem.bind(this)}/>
+               updateItem={this.updateItem.bind(this)}
+               addItem={this.addItem.bind(this)}/>
       </div>
     );
   }

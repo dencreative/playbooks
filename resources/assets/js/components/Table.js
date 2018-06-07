@@ -8,13 +8,15 @@ export default function Table(props) {
       <thead>
         <tr>
           <th scope="col">Item</th>
+          <th scope="col">ID</th>
           <th scope="col">Action</th>
         </tr>
       </thead>
       <tbody>
         {
           props.items.map((item,index) => 
-            <TableItem item={item} 
+            <TableItem item={item[0]}
+                       id={item[1]} 
                        index={index} 
                        handle={props.handle.bind(this)}
                        key={index}/>) 

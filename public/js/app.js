@@ -22881,6 +22881,7 @@ var TableItem = function (_Component) {
     key: 'render',
     value: function render() {
       var index = this.props.index;
+      var id = this.props.id;
       return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'tr',
         null,
@@ -22891,20 +22892,25 @@ var TableItem = function (_Component) {
         ),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           'td',
+          null,
+          this.props.id
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'td',
           { className: 'buttons' },
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             'button',
-            { className: 'btn btn-info', value: 'Read', onClick: this.props.handle.bind(this, 'read', index) },
+            { className: 'btn btn-info', value: 'Read', onClick: this.props.handle.bind(this, 'read', index, id) },
             'Read'
           ),
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             'button',
-            { className: 'btn btn-primary', value: 'Edit', onClick: this.props.handle.bind(this, 'edit', index) },
+            { className: 'btn btn-primary', value: 'Edit', onClick: this.props.handle.bind(this, 'edit', index, id) },
             'Edit'
           ),
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             'button',
-            { className: 'btn btn-danger', value: 'Delete', onClick: this.props.handle.bind(this, 'delete', index) },
+            { className: 'btn btn-danger', value: 'Delete', onClick: this.props.handle.bind(this, 'delete', index, id) },
             'Delete'
           )
         )
@@ -45193,6 +45199,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var ITEMS = ["Apples", "Broccoli", "Chghicken", "Duckg", "Eggs", "Fish", "Grganola", "Hasgh Browns", "Applges", "Broccgoli", "Chickegn", "Duck", "gEggs", "gFish", "gGranola", "gHash Browns", "gApples", "Bgroccoli", "jgChicken", "jDuck", "gEggs", "ggFish", "gGranola", "gHash Browns", "Aghpples", "Brhoccoli", "Chjicken", "Dujck", "Eghgs", "Fhish", "Ghranola", "Hhash Browns", "Ahpples", "Bhroccoli", "Chhicken", "Dhuck", "Ehggs", "Fhish", "Ghranola", "Hhash Browns", "Ahpples", "Bhroccoli", "Chhicken", "Dhguck", "Eggggs", "Figsh", "Grganola", "Hagsh Browns", "Apttrples", "Broyccoli", "Chijcken", "Ducjk", "Eggjs", "Fisjh", "Grajnola", "Hasjh Browns", "Appjles", "Brojccoli", "Chijcken", "Dujcjk", "Egjgs", "Fijsh", "Grjanola", "Hajsh Browns", "Apjples", "Brjoccoli", "Chjicken", "Duckk", "Eggks", "Fislh", "Gralnola", "Haslh Browns", "Applles", "Brolccoli", "Chilcken", "Duclk", "Egg;s", "Fiskh", "Grajnola", "Hashh Browns", "Applges", "Broccgoli", "Chicken", "Duchk", "Egghs", "Fisjh", "Grajnola", "Hasjh Browns", "Appkles", "Brojkccoli", "Chickken", "Duckk", "Eggs", "Fiksh", "Grkanola", "Haksh Browns", "Apkples", "Brkoccoli", "Chkicken", "Dukck", "Egkgs", "Fiksh", "Grkanola", "Haksh Browns", "Apkples", "Brkoccoli", "Chllicken", "Duclk", "Eggls", "Fislh", "Glranola", "Hlash Browns", "Alpples", "Blroccoli", "Clhicken", "Dluck", "Elggs", "Flish", "Gl;ranola", "Ha;sh Browns", "Ap;ples", "Br;occoli", "Ch;icken", "Du;ck", "Eg;gs", "Fi;sh", "Gr;anola", "Ha;sh Browns", "Ap;ples", "Bro'ccoli", "Chi'cken", "Duc'k", "Egg's", "Fis'h", "Grajnola", "Hasjh Browns", "Appljes", "Broccjoli", "Chickjen", "Djuck", "Ejggs", "Fjish", "Gjranola", "Hjash Browns", "Ajpples", "Bjroccoli", "Cjhicken", "Djuck", "Ejggs", "Fjish", "Gjranola", "Hkash Browns", "Akpples", "Bkroccoli", "Ckhicken", "Dkuck", "Ekggs", "Fkish", "Gkranola", "Hkash Browns", "Akpples", "Bkroccoli", "Ckhicken", "Dkluck", "Eglgs", "Filsh", "Grlanola", "Halsh Browns"];
 
+var API = 'https://den-playbooks.app/api/';
+var INDEX_QUERY = 'products';
+
 var Main = function (_Component) {
   _inherits(Main, _Component);
 
@@ -45202,24 +45211,46 @@ var Main = function (_Component) {
     var _this = _possibleConstructorReturn(this, (Main.__proto__ || Object.getPrototypeOf(Main)).call(this, props));
 
     _this.state = {
-      'mode': '', 'query': '', 'item': '',
-      'allItems': ["Apples", "Broccoli", "Chghicken", "Duckg", "Eggs", "Fish", "Grganola", "Hasgh Browns", "Applges", "Broccgoli", "Chickegn", "Duck", "gEggs", "gFish", "gGranola", "gHash Browns", "gApples", "Bgroccoli", "jgChicken", "jDuck", "gEggs", "ggFish", "gGranola", "gHash Browns", "Aghpples", "Brhoccoli", "Chjicken", "Dujck", "Eghgs", "Fhish", "Ghranola", "Hhash Browns", "Ahpples", "Bhroccoli", "Chhicken", "Dhuck", "Ehggs", "Fhish", "Ghranola", "Hhash Browns", "Ahpples", "Bhroccoli", "Chhicken", "Dhguck", "Eggggs", "Figsh", "Grganola", "Hagsh Browns", "Apttrples", "Broyccoli", "Chijcken", "Ducjk", "Eggjs", "Fisjh", "Grajnola", "Hasjh Browns", "Appjles", "Brojccoli", "Chijcken", "Dujcjk", "Egjgs", "Fijsh", "Grjanola", "Hajsh Browns", "Apjples", "Brjoccoli", "Chjicken", "Duckk", "Eggks", "Fislh", "Gralnola", "Haslh Browns", "Applles", "Brolccoli", "Chilcken", "Duclk", "Egg;s", "Fiskh", "Grajnola", "Hashh Browns", "Applges", "Broccgoli", "Chicken", "Duchk", "Egghs", "Fisjh", "Grajnola", "Hasjh Browns", "Appkles", "Brojkccoli", "Chickken", "Duckk", "Eggs", "Fiksh", "Grkanola", "Haksh Browns", "Apkples", "Brkoccoli", "Chkicken", "Dukck", "Egkgs", "Fiksh", "Grkanola", "Haksh Browns", "Apkples", "Brkoccoli", "Chllicken", "Duclk", "Eggls", "Fislh", "Glranola", "Hlash Browns", "Alpples", "Blroccoli", "Clhicken", "Dluck", "Elggs", "Flish", "Gl;ranola", "Ha;sh Browns", "Ap;ples", "Br;occoli", "Ch;icken", "Du;ck", "Eg;gs", "Fi;sh", "Gr;anola", "Ha;sh Browns", "Ap;ples", "Bro'ccoli", "Chi'cken", "Duc'k", "Egg's", "Fis'h", "Grajnola", "Hasjh Browns", "Appljes", "Broccjoli", "Chickjen", "Djuck", "Ejggs", "Fjish", "Gjranola", "Hjash Browns", "Ajpples", "Bjroccoli", "Cjhicken", "Djuck", "Ejggs", "Fjish", "Gjranola", "Hkash Browns", "Akpples", "Bkroccoli", "Ckhicken", "Dkuck", "Ekggs", "Fkish", "Gkranola", "Hkash Browns", "Akpples", "Bkroccoli", "Ckhicken", "Dkluck", "Eglgs", "Filsh", "Grlanola", "Halsh Browns"],
-      'displayItems': [],
-      'showModal': false
+      mode: '', query: '', item: '',
+      allItems: ITEMS,
+      displayItems: [],
+      products: [],
+      productIds: [],
+      showModal: false
     };
     return _this;
   }
 
-  // Update query state.
-
-
   _createClass(Main, [{
+    key: 'componentWillMount',
+    value: function componentWillMount() {
+      var _this2 = this;
+
+      // Get all items from db.
+      // Bunch up into 2-len arrays [item, id]
+      fetch(API + INDEX_QUERY).then(function (response) {
+        return response.json();
+      }).then(function (data) {
+        var list = [];
+        data.map(function (item) {
+          if (item.description) {
+            list.push([item.description, item.id]);
+          }
+        });
+        _this2.setState({ products: list });
+      });
+    }
+
+    // Update query state.
+
+  }, {
     key: 'buildList',
     value: function buildList(event) {
       var query = event.target.value.toLowerCase();
-      var list = this.state.allItems;
+      var list = this.state.products;
+
       var newList = list.filter(function (item) {
-        return item.toLowerCase().includes(query);
+        return item[0].toLowerCase().includes(query);
       });
       this.setState({ displayItems: newList, query: query });
     }
@@ -45228,9 +45259,11 @@ var Main = function (_Component) {
 
   }, {
     key: 'handleChange',
-    value: function handleChange(mode, index) {
+    value: function handleChange(mode, index, id) {
+
+      id ? console.log('handling id ' + id + "at index: " + index) : console.log('new id');
       this.setState({ mode: mode,
-        item: !this.state.query ? this.state.allItems[index] : this.state.displayItems[index],
+        item: !this.state.query && mode !== 'write' ? this.state.products[index][0] : this.state.displayItems[index],
         showModal: true });
     }
 
@@ -45247,13 +45280,14 @@ var Main = function (_Component) {
   }, {
     key: 'removeItem',
     value: function removeItem() {
+      console.log("Removing: " + this.state.item);
+
       var item = this.state.item;
-      console.log('Removing: ' + item);
       this.setState({
         item: '',
         showModal: false,
-        allItems: this.state.allItems.filter(function (el) {
-          return el !== item;
+        products: this.state.products.filter(function (el) {
+          return el[0] !== item;
         }),
         displayItems: this.state.displayItems.filter(function (el) {
           return el !== item;
@@ -45267,25 +45301,44 @@ var Main = function (_Component) {
     key: 'updateItem',
     value: function updateItem(newItem) {
 
-      // Post data to API.
-      Object(__WEBPACK_IMPORTED_MODULE_8__requests__["a" /* postItem */])(newItem);
+      console.log('diree');
 
-      var index = this.state.allItems.indexOf(this.state.item);
-      var list = this.state.allItems;
+      var list = this.state.products;
+      var newId = list[list.length - 1][1] + 1;
+      var currentItem = this.state.item;
 
-      if (index !== -1) list[index] = newItem;else list.push(newItem);
+      list.map(function (e) {
+        if (e[0] === currentItem) e[0] = newItem;
+      });
 
       this.setState({
-        item: '',
-        showModal: false,
-        allItems: list
+        products: list,
+        showModal: false
+      });
+    }
+  }, {
+    key: 'addItem',
+    value: function addItem(newItem) {
+
+      var list = this.state.products;
+      var newId = list[list.length - 1][1] + 1;
+
+      list.push([newItem, newId]);
+
+      this.setState({
+        products: list,
+        showModal: false
       });
     }
   }, {
     key: 'render',
     value: function render() {
       var query = this.state.query;
-      var items = !query ? this.state.allItems : this.state.displayItems;
+
+      // Decides view: initial (display all) or query (display sorted.)
+      var items = !query ? this.state.products : this.state.displayItems;
+
+      // Decides the type of modal at runtime.
       var Modal = this.state.mode === '' ? __WEBPACK_IMPORTED_MODULE_4__Modals__["b" /* ReadModal */] : __WEBPACK_IMPORTED_MODULE_4__Modals__["a" /* MODALS */][this.state.mode];
 
       return __WEBPACK_IMPORTED_MODULE_2_react___default.a.createElement(
@@ -45294,10 +45347,12 @@ var Main = function (_Component) {
         __WEBPACK_IMPORTED_MODULE_2_react___default.a.createElement(
           'div',
           { className: 'container-fluid' },
-          __WEBPACK_IMPORTED_MODULE_2_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7__Alert__["a" /* default */], { type: 'info' }),
           __WEBPACK_IMPORTED_MODULE_2_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__ToolBar__["a" /* default */], { buildList: this.buildList.bind(this),
             handle: this.handleChange.bind(this) }),
-          __WEBPACK_IMPORTED_MODULE_2_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__Table__["a" /* default */], { items: !query ? this.state.allItems : this.state.displayItems,
+          __WEBPACK_IMPORTED_MODULE_2_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__Table__["a" /* default */], { items: items,
+            ids: this.state.products.map(function (e) {
+              return e.id;
+            }),
             handle: this.handleChange.bind(this) }),
           __WEBPACK_IMPORTED_MODULE_2_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7__Alert__["a" /* default */], { type: 'danger', warn: this.state.displayItems.length === 0 && query })
         ),
@@ -45306,7 +45361,8 @@ var Main = function (_Component) {
           show: this.state.showModal,
           handleCloseModal: this.handleCloseModal.bind(this),
           removeItem: this.removeItem.bind(this),
-          updateItem: this.updateItem.bind(this) })
+          updateItem: this.updateItem.bind(this),
+          addItem: this.addItem.bind(this) })
       );
     }
   }]);
@@ -64767,6 +64823,11 @@ var WriteModal = function (_MyModal) {
   }
 
   _createClass(WriteModal, [{
+    key: 'addItem',
+    value: function addItem(newItem) {
+      this.props.addItem(this.state.query);
+    }
+  }, {
     key: 'updateItem',
     value: function updateItem() {
       this.props.updateItem(this.state.query);
@@ -64808,7 +64869,7 @@ var WriteModal = function (_MyModal) {
           ),
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["b" /* Button */],
-            { bsStyle: 'primary', onClick: this.updateItem.bind(this) },
+            { bsStyle: 'primary', onClick: this.addItem.bind(this) },
             'Submit'
           )
         )
@@ -77214,6 +77275,11 @@ function Table(props) {
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           'th',
           { scope: 'col' },
+          'ID'
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'th',
+          { scope: 'col' },
           'Action'
         )
       )
@@ -77222,7 +77288,8 @@ function Table(props) {
       'tbody',
       null,
       props.items.map(function (item, index) {
-        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__TableItem__["a" /* default */], { item: item,
+        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__TableItem__["a" /* default */], { item: item[0],
+          id: item[1],
           index: index,
           handle: props.handle.bind(_this),
           key: index });
@@ -77296,7 +77363,7 @@ function Alert(props) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (immutable) */ __webpack_exports__["a"] = postItem;
+/* unused harmony export postItem */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom__ = __webpack_require__(10);

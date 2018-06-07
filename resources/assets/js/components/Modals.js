@@ -19,6 +19,10 @@ export class WriteModal extends MyModal {
     }
   }
 
+  addItem(newItem) {
+    this.props.addItem(this.state.query)
+  }
+
   updateItem() {
     this.props.updateItem(this.state.query)
   }
@@ -40,7 +44,7 @@ export class WriteModal extends MyModal {
           </Modal.Body>
           <Modal.Footer>
             <Button onClick={this.handleClose.bind(this)}>Cancel</Button>
-            <Button bsStyle="primary" onClick={this.updateItem.bind(this)}>Submit</Button>
+            <Button bsStyle="primary" onClick={this.addItem.bind(this)}>Submit</Button>
           </Modal.Footer>
         </Modal>
     );
