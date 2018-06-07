@@ -14,8 +14,9 @@ import Alert from './Alert';
 import { postItem } from './requests'
 
 const API = 'https://den-playbooks.app/api/';
-const INDEX_QUERY = 'products/';
-const POST_QUERY = 'products/';
+const INDEX_QUERY = 'products';
+const POST_QUERY = 'products';
+const PUT_QUERY = 'products/'
 
 class Main extends Component {
 
@@ -39,7 +40,8 @@ class Main extends Component {
         data.map(item => {
             if (item.description) { list.push([item.description, item.id]) }
         })
-      this.setState({products:list})
+      // Reverse to make newest entries appear at the top.  
+      this.setState({products:list.reverse()})
     })
   }
 
@@ -78,7 +80,7 @@ class Main extends Component {
         displayItems: this.state.displayItems.filter(el => el !== item)
     })
 
-    fetch(API + POST_QUERY + this.state.item[1], {
+    fetch(API + PUT_QUERY + this.state.item[1], {
       method: 'DELETE',
       headers: {
         'Accept': 'application/json',
@@ -88,9 +90,9 @@ class Main extends Component {
   }
 
   // Update the entry if confirmed.
-  updateItem(newItem, id) {
+  updateItem(newItem) {
 
-    console.log(id)
+    const id = this.state.item[1]
 
     let list = this.state.products;
     let displayList = this.state.displayItems
@@ -109,9 +111,8 @@ class Main extends Component {
       showModal: false,
     })
 
-    console.log(API + POST_QUERY + id)
     // Send post request.
-    fetch(API + POST_QUERY + id, {
+    fetch(API + PUT_QUERY + id, {
       method: 'PUT',
       headers: {
         'Accept': 'application/json',
@@ -121,7 +122,7 @@ class Main extends Component {
         title: newItem,
         price: 100,
         availability: true,
-        description: "empty description"
+        description: newItem
       })
     }).then(response => console.log(response))
 
@@ -138,10 +139,10 @@ class Main extends Component {
     const n = [newItem, newId]
 
     // Push to display first.
-    displayList.push(n)
+    displayList.unshift(n)
 
     // If query is empty or missing in products - add.
-    if (!list.includes(n) || !this.state.query) list.push(n)
+    if (!list.includes(n) || !this.state.query) list.unshift(n)
 
     this.setState({
       products: list,

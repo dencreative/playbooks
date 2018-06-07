@@ -45198,8 +45198,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
 var API = 'https://den-playbooks.app/api/';
-var INDEX_QUERY = 'products/';
-var POST_QUERY = 'products/';
+var INDEX_QUERY = 'products';
+var POST_QUERY = 'products';
+var PUT_QUERY = 'products/';
 
 var Main = function (_Component) {
   _inherits(Main, _Component);
@@ -45234,7 +45235,8 @@ var Main = function (_Component) {
             list.push([item.description, item.id]);
           }
         });
-        _this2.setState({ products: list });
+        // Reverse to make newest entries appear at the top.  
+        _this2.setState({ products: list.reverse() });
       });
     }
 
@@ -45291,7 +45293,7 @@ var Main = function (_Component) {
         })
       });
 
-      fetch(API + POST_QUERY + this.state.item[1], {
+      fetch(API + PUT_QUERY + this.state.item[1], {
         method: 'DELETE',
         headers: {
           'Accept': 'application/json',
@@ -45306,10 +45308,10 @@ var Main = function (_Component) {
 
   }, {
     key: 'updateItem',
-    value: function updateItem(newItem, id) {
+    value: function updateItem(newItem) {
       var _this3 = this;
 
-      console.log(id);
+      var id = this.state.item[1];
 
       var list = this.state.products;
       var displayList = this.state.displayItems;
@@ -45329,9 +45331,8 @@ var Main = function (_Component) {
         showModal: false
       });
 
-      console.log(API + POST_QUERY + id);
       // Send post request.
-      fetch(API + POST_QUERY + id, {
+      fetch(API + PUT_QUERY + id, {
         method: 'PUT',
         headers: {
           'Accept': 'application/json',
@@ -45341,7 +45342,7 @@ var Main = function (_Component) {
           title: newItem,
           price: 100,
           availability: true,
-          description: "empty description"
+          description: newItem
         })
       }).then(function (response) {
         return console.log(response);
@@ -45361,10 +45362,10 @@ var Main = function (_Component) {
       var n = [newItem, newId];
 
       // Push to display first.
-      displayList.push(n);
+      displayList.unshift(n);
 
       // If query is empty or missing in products - add.
-      if (!list.includes(n) || !this.state.query) list.push(n);
+      if (!list.includes(n) || !this.state.query) list.unshift(n);
 
       this.setState({
         products: list,
