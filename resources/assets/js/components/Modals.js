@@ -93,7 +93,7 @@ export class EditModal extends MyModal {
   }
 
   updateItem() {
-    this.props.updateItem(this.state.query)
+    this.props.updateItem(this.state.query, this.props.item[1])
   }
 
   handleChange(event) {

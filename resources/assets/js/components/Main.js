@@ -13,178 +13,9 @@ import Alert from './Alert';
 
 import { postItem } from './requests'
 
-
-const ITEMS = ["Apples",
-         "Broccoli",
-         "Chghicken",
-         "Duckg",
-         "Eggs",
-         "Fish",
-         "Grganola",
-         "Hasgh Browns",
-         "Applges",
-         "Broccgoli",
-         "Chickegn",
-         "Duck",
-         "gEggs",
-         "gFish",
-         "gGranola",
-         "gHash Browns",
-         "gApples",
-         "Bgroccoli",
-         "jgChicken",
-         "jDuck",
-         "gEggs",
-         "ggFish",
-         "gGranola",
-         "gHash Browns",
-         "Aghpples",
-         "Brhoccoli",
-         "Chjicken",
-         "Dujck",
-         "Eghgs",
-         "Fhish",
-         "Ghranola",
-         "Hhash Browns",
-         "Ahpples",
-         "Bhroccoli",
-         "Chhicken",
-         "Dhuck",
-         "Ehggs",
-         "Fhish",
-         "Ghranola",
-         "Hhash Browns",
-         "Ahpples",
-         "Bhroccoli",
-         "Chhicken",
-         "Dhguck",
-         "Eggggs",
-         "Figsh",
-         "Grganola",
-         "Hagsh Browns",
-         "Apttrples",
-         "Broyccoli",
-         "Chijcken",
-         "Ducjk",
-         "Eggjs",
-         "Fisjh",
-         "Grajnola",
-         "Hasjh Browns",
-         "Appjles",
-         "Brojccoli",
-         "Chijcken",
-         "Dujcjk",
-         "Egjgs",
-         "Fijsh",
-         "Grjanola",
-         "Hajsh Browns",
-         "Apjples",
-         "Brjoccoli",
-         "Chjicken",
-         "Duckk",
-         "Eggks",
-         "Fislh",
-         "Gralnola",
-         "Haslh Browns",
-         "Applles",
-         "Brolccoli",
-         "Chilcken",
-         "Duclk",
-         "Egg;s",
-         "Fiskh",
-         "Grajnola",
-         "Hashh Browns",
-         "Applges",
-         "Broccgoli",
-         "Chicken",
-         "Duchk",
-         "Egghs",
-         "Fisjh",
-         "Grajnola",
-         "Hasjh Browns",
-         "Appkles",
-         "Brojkccoli",
-         "Chickken",
-         "Duckk",
-         "Eggs",
-         "Fiksh",
-         "Grkanola",
-         "Haksh Browns",
-         "Apkples",
-         "Brkoccoli",
-         "Chkicken",
-         "Dukck",
-         "Egkgs",
-         "Fiksh",
-         "Grkanola",
-         "Haksh Browns",
-         "Apkples",
-         "Brkoccoli",
-         "Chllicken",
-         "Duclk",
-         "Eggls",
-         "Fislh",
-         "Glranola",
-         "Hlash Browns",
-         "Alpples",
-         "Blroccoli",
-         "Clhicken",
-         "Dluck",
-         "Elggs",
-         "Flish",
-         "Gl;ranola",
-         "Ha;sh Browns",
-         "Ap;ples",
-         "Br;occoli",
-         "Ch;icken",
-         "Du;ck",
-         "Eg;gs",
-         "Fi;sh",
-         "Gr;anola",
-         "Ha;sh Browns",
-         "Ap;ples",
-         "Bro'ccoli",
-         "Chi'cken",
-         "Duc'k",
-         "Egg's",
-         "Fis'h",
-         "Grajnola",
-         "Hasjh Browns",
-         "Appljes",
-         "Broccjoli",
-         "Chickjen",
-         "Djuck",
-         "Ejggs",
-         "Fjish",
-         "Gjranola",
-         "Hjash Browns",
-         "Ajpples",
-         "Bjroccoli",
-         "Cjhicken",
-         "Djuck",
-         "Ejggs",
-         "Fjish",
-         "Gjranola",
-         "Hkash Browns",
-         "Akpples",
-         "Bkroccoli",
-         "Ckhicken",
-         "Dkuck",
-         "Ekggs",
-         "Fkish",
-         "Gkranola",
-         "Hkash Browns",
-         "Akpples",
-         "Bkroccoli",
-         "Ckhicken",
-         "Dkluck",
-         "Eglgs",
-         "Filsh",
-         "Grlanola",
-         "Halsh Browns"]
-
 const API = 'https://den-playbooks.app/api/';
-const INDEX_QUERY = 'products';
+const INDEX_QUERY = 'products/';
+const POST_QUERY = 'products/';
 
 class Main extends Component {
 
@@ -246,15 +77,23 @@ class Main extends Component {
         products: this.state.products.filter(el => el !== item),
         displayItems: this.state.displayItems.filter(el => el !== item)
     })
+
+    fetch(API + POST_QUERY + this.state.item[1], {
+      method: 'DELETE',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      }
+    }).then(response => console.log(response))
   }
 
   // Update the entry if confirmed.
-  updateItem(newItem) {
+  updateItem(newItem, id) {
+
+    console.log(id)
 
     let list = this.state.products;
     let displayList = this.state.displayItems
-
-    let newId = list[list.length-1][1] + 1;
 
     const f = (e) => {
         if (e[0] == this.state.item[0]) { 
@@ -269,6 +108,24 @@ class Main extends Component {
       displayItems:displayList,
       showModal: false,
     })
+
+    console.log(API + POST_QUERY + id)
+    // Send post request.
+    fetch(API + POST_QUERY + id, {
+      method: 'PUT',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        title: newItem,
+        price: 100,
+        availability: true,
+        description: "empty description"
+      })
+    }).then(response => console.log(response))
+
+
   }
 
   // Add entry if confirmed.
@@ -291,6 +148,21 @@ class Main extends Component {
       displayItems:displayList,
       showModal: false,
     })
+
+    // Send post request.
+    fetch(API + POST_QUERY, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        title: newItem,
+        price: 100,
+        availability: true,
+        description: newItem
+      })
+    }).then(response => console.log(response))
 
   }
 
