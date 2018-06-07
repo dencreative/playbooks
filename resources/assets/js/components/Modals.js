@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Modal, Button , FormGroup, FormControl, ControlLabel} from 'react-bootstrap';
+import { Modal, Button , FormGroup, FormControl, ControlLabel, HelpBlock} from 'react-bootstrap';
 
 // Abstract modal class.
 class MyModal extends Modal {
@@ -19,7 +19,14 @@ export class WriteModal extends MyModal {
     }
   }
 
-  addItem(newItem) {
+  handleKeyPress(e) {
+    if (e.key === "Enter") {
+      e.preventDefault()
+      this.addItem()
+    }
+  }
+
+  addItem() {
     this.props.addItem(this.state.query)
   }
 
@@ -34,13 +41,17 @@ export class WriteModal extends MyModal {
       <Modal animation = {false} show={this.props.show} onHide={this.handleClose.bind(this)}>
           <Modal.Body>
             <FormGroup controlId="formControlsTextarea">
-              <ControlLabel>Edit your component.</ControlLabel>
-              <FormControl componentClass="textarea" placeholder="New item" onChange={this.handleChange.bind(this)} />
+              <ControlLabel>Add new entry.</ControlLabel>
+              <FormControl componentClass="textarea" 
+                           placeholder="New item" 
+                           autoFocus = {true} 
+                           onChange={this.handleChange.bind(this)} 
+                           onKeyDown={this.handleKeyPress.bind(this)}/>
             </FormGroup>
           </Modal.Body>
           <Modal.Footer>
             <Button onClick={this.handleClose.bind(this)}>Cancel</Button>
-            <Button bsStyle="primary" onClick={this.addItem.bind(this)}>Submit</Button>
+            <Button bsStyle="primary" onClick={this.addItem.bind(this)} onKeyPress={this.handleKeyPress}>Submit</Button>
           </Modal.Footer>
         </Modal>
     );
@@ -52,7 +63,7 @@ export class ReadModal extends MyModal {
     return (
       <Modal animation = {false} show={this.props.show} onHide={this.handleClose.bind(this)}>
           <Modal.Body>
-            <p className = 'text-justify'>{this.props.item}</p>
+            <p className='text-justify'>{this.props.item[0]}</p>
           </Modal.Body>
           <Modal.Footer>
             <Button onClick={this.handleClose.bind(this)}>Close</Button>
@@ -103,12 +114,13 @@ export class EditModal extends MyModal {
   }
 
   render() {
+    const value = (!this.state.query) ? this.props.item[0] : this.state.query
     return (
       <Modal animation = {false} show={this.props.show} onHide={this.handleClose.bind(this)}>
           <Modal.Body>
             <FormGroup controlId="formControlsTextarea">
               <ControlLabel>Edit your component.</ControlLabel>
-              <FormControl componentClass="textarea" placeholder={this.props.item} onChange={this.handleChange.bind(this)} />
+              <FormControl componentClass="textarea" placeholder={this.props.item[0]} value={value} autoFocus = {true} onChange={this.handleChange.bind(this)}/>
             </FormGroup>
           </Modal.Body>
           <Modal.Footer>

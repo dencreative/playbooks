@@ -64879,8 +64879,16 @@ var WriteModal = function (_MyModal) {
   }
 
   _createClass(WriteModal, [{
+    key: 'handleKeyPress',
+    value: function handleKeyPress(e) {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        this.addItem();
+      }
+    }
+  }, {
     key: 'addItem',
-    value: function addItem(newItem) {
+    value: function addItem() {
       this.props.addItem(this.state.query);
     }
   }, {
@@ -64905,9 +64913,13 @@ var WriteModal = function (_MyModal) {
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
               __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["c" /* ControlLabel */],
               null,
-              'Edit your component.'
+              'Add new entry.'
             ),
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["d" /* FormControl */], { componentClass: 'textarea', placeholder: 'New item', onChange: this.handleChange.bind(this) })
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["d" /* FormControl */], { componentClass: 'textarea',
+              placeholder: 'New item',
+              autoFocus: true,
+              onChange: this.handleChange.bind(this),
+              onKeyDown: this.handleKeyPress.bind(this) })
           )
         ),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -64920,7 +64932,7 @@ var WriteModal = function (_MyModal) {
           ),
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["b" /* Button */],
-            { bsStyle: 'primary', onClick: this.addItem.bind(this) },
+            { bsStyle: 'primary', onClick: this.addItem.bind(this), onKeyPress: this.handleKeyPress },
             'Submit'
           )
         )
@@ -64952,7 +64964,7 @@ var ReadModal = function (_MyModal2) {
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             'p',
             { className: 'text-justify' },
-            this.props.item
+            this.props.item[0]
           )
         ),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -65050,6 +65062,7 @@ var EditModal = function (_MyModal4) {
   }, {
     key: 'render',
     value: function render() {
+      var value = !this.state.query ? this.props.item[0] : this.state.query;
       return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["f" /* Modal */],
         { animation: false, show: this.props.show, onHide: this.handleClose.bind(this) },
@@ -65064,7 +65077,7 @@ var EditModal = function (_MyModal4) {
               null,
               'Edit your component.'
             ),
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["d" /* FormControl */], { componentClass: 'textarea', placeholder: this.props.item, onChange: this.handleChange.bind(this) })
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["d" /* FormControl */], { componentClass: 'textarea', placeholder: this.props.item[0], value: value, autoFocus: true, onChange: this.handleChange.bind(this) })
           )
         ),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -77265,6 +77278,15 @@ var Well = function (_React$Component) {
 
 
 function ToolBar(props) {
+  var _this = this;
+
+  var onClick = function onClick() {
+    return props.handle.bind(_this, 'write');
+  };
+  var handleKeyPress = function handleKeyPress(e) {
+    console.log(e);
+  };
+
   return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
     'div',
     { className: 'row' },
@@ -77284,7 +77306,8 @@ function ToolBar(props) {
         'button',
         { className: 'btn btn-primary',
           value: 'Create',
-          onClick: props.handle.bind(this, 'write') },
+          onKeyDown: handleKeyPress(),
+          onClick: onClick() },
         'Add Entry'
       )
     )
