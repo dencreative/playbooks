@@ -12,9 +12,34 @@ import Table from './Table';
 import Alert from './Alert';
 
 const API = 'https://den-playbooks.app/api/';
-const INDEX_QUERY = 'entries';
-const POST_QUERY = 'entries';
-const PUT_QUERY = 'entries/'
+const INDEX_QUERY = 'entries'
+
+const sendRequest = (method, id, item, description) => {
+
+  // Decide endpoint.
+  let QUERY = '';
+  switch (method) {
+    case ('GET'): QUERY = 'entries'; break;
+    case ('POST'): QUERY = 'entries'; break;
+    case ('PUT'): QUERY = 'entries/'; break;
+    case ('DELETE'): QUERY = 'entries/'; break;
+  };
+
+  const headers = {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json'
+  };
+
+  // Send request.
+  fetch(API + QUERY + id, {
+    method: method,
+    headers: headers,
+    body: JSON.stringify({
+      title: item,
+      description: description
+    })
+  }).then(response => console.log(response))
+}
 
 class Main extends Component {
 
@@ -66,8 +91,6 @@ class Main extends Component {
 
   // Delete the entry if confirmed.
   removeItem() {
-    console.log("Removing: " + this.state.item)
-    
     const item = this.state.item
     this.setState({
         item:'',
@@ -76,27 +99,20 @@ class Main extends Component {
         displayItems: this.state.displayItems.filter(el => el !== item)
     })
 
-    fetch(API + PUT_QUERY + this.state.item.id, {
-      method: 'DELETE',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      }
-    }).then(response => console.log(response))
+    // Send request.
+    sendRequest('DELETE', item.id)
   }
 
   // Update the entry if confirmed.
   updateItem(newTitle, newDescription) {
 
-    console.log(newDescription)
-
-    const id = this.state.item.id
+    const item = this.state.item
 
     let list = this.state.products;
     let displayList = this.state.displayItems
 
     const f = (e) => {
-        if (e == this.state.item) { 
+        if (e == item) { 
             e.title = newTitle
             e.description = newDescription }
         }
@@ -110,21 +126,12 @@ class Main extends Component {
       showModal: false,
     })
 
-    // Send post request.
-    fetch(API + PUT_QUERY + id, {
-      method: 'PUT',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        title: newTitle,
-        description: newDescription
-      })
-    })
+    // Send request.
+    sendRequest('PUT', item.id, newTitle, newDescription)
   }
 
   // Add entry if confirmed.
+  // this.state.item is undefined.
   addItem(newTitle, newDescription) {
 
     let list =  this.state.products;
@@ -133,9 +140,10 @@ class Main extends Component {
     // First index because whole list is reversed. See componentDidMount.
     let newId = list[0].id + 1;
 
+    // Constructing new item object to insert into table.
     const n = {title:newTitle, description:newDescription, id:newId}
 
-    // Push to display first.
+    // Unshift to display first.
     displayList.unshift(n)
 
     // If query is empty or missing in products - add.
@@ -147,22 +155,14 @@ class Main extends Component {
       showModal: false,
     })
 
-    // Send post request.
-    fetch(API + POST_QUERY, {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        title: newTitle,
-        description: newDescription
-      })
-    })
+    // Send request.
+    sendRequest('POST', '', newTitle, newDescription)
+
   }
 
 
   render() {
+    // Search query
     const query = this.state.query
 
     // Decides view: initial (display all) or query (display sorted.)
@@ -196,24 +196,6 @@ class Main extends Component {
 }
 
 export default Main;
-
-const sendRequest = (method, title, description) => {
-  const API = 'https://den-playbooks.app/api/';
-  const INDEX_QUERY = 'products';
-  const POST_QUERY = 'products';
-  const PUT_QUERY = 'products/'
-  fetch(API + POST_QUERY, {
-    method: method,
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      title: title,
-      description: description
-    })
-  })
-}
 
 
 if (document.getElementById('example')) {

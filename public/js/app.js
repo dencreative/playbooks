@@ -45201,8 +45201,39 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var API = 'https://den-playbooks.app/api/';
 var INDEX_QUERY = 'entries';
-var POST_QUERY = 'entries';
-var PUT_QUERY = 'entries/';
+
+var sendRequest = function sendRequest(method, id, item, description) {
+
+  // Decide endpoint.
+  var QUERY = '';
+  switch (method) {
+    case 'GET':
+      QUERY = 'entries';break;
+    case 'POST':
+      QUERY = 'entries';break;
+    case 'PUT':
+      QUERY = 'entries/';break;
+    case 'DELETE':
+      QUERY = 'entries/';break;
+  };
+
+  var headers = {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json'
+  };
+
+  // Send request.
+  fetch(API + QUERY + id, {
+    method: method,
+    headers: headers,
+    body: JSON.stringify({
+      title: item,
+      description: description
+    })
+  }).then(function (response) {
+    return console.log(response);
+  });
+};
 
 var Main = function (_Component) {
   _inherits(Main, _Component);
@@ -45279,8 +45310,6 @@ var Main = function (_Component) {
   }, {
     key: 'removeItem',
     value: function removeItem() {
-      console.log("Removing: " + this.state.item);
-
       var item = this.state.item;
       this.setState({
         item: '',
@@ -45293,15 +45322,8 @@ var Main = function (_Component) {
         })
       });
 
-      fetch(API + PUT_QUERY + this.state.item.id, {
-        method: 'DELETE',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        }
-      }).then(function (response) {
-        return console.log(response);
-      });
+      // Send request.
+      sendRequest('DELETE', item.id);
     }
 
     // Update the entry if confirmed.
@@ -45309,17 +45331,14 @@ var Main = function (_Component) {
   }, {
     key: 'updateItem',
     value: function updateItem(newTitle, newDescription) {
-      var _this3 = this;
 
-      console.log(newDescription);
-
-      var id = this.state.item.id;
+      var item = this.state.item;
 
       var list = this.state.products;
       var displayList = this.state.displayItems;
 
       var f = function f(e) {
-        if (e == _this3.state.item) {
+        if (e == item) {
           e.title = newTitle;
           e.description = newDescription;
         }
@@ -45334,21 +45353,12 @@ var Main = function (_Component) {
         showModal: false
       });
 
-      // Send post request.
-      fetch(API + PUT_QUERY + id, {
-        method: 'PUT',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          title: newTitle,
-          description: newDescription
-        })
-      });
+      // Send request.
+      sendRequest('PUT', item.id, newTitle, newDescription);
     }
 
     // Add entry if confirmed.
+    // this.state.item is undefined.
 
   }, {
     key: 'addItem',
@@ -45360,9 +45370,10 @@ var Main = function (_Component) {
       // First index because whole list is reversed. See componentDidMount.
       var newId = list[0].id + 1;
 
+      // Constructing new item object to insert into table.
       var n = { title: newTitle, description: newDescription, id: newId
 
-        // Push to display first.
+        // Unshift to display first.
       };displayList.unshift(n);
 
       // If query is empty or missing in products - add.
@@ -45374,22 +45385,13 @@ var Main = function (_Component) {
         showModal: false
       });
 
-      // Send post request.
-      fetch(API + POST_QUERY, {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          title: newTitle,
-          description: newDescription
-        })
-      });
+      // Send request.
+      sendRequest('POST', '', newTitle, newDescription);
     }
   }, {
     key: 'render',
     value: function render() {
+      // Search query
       var query = this.state.query;
 
       // Decides view: initial (display all) or query (display sorted.)
@@ -45424,24 +45426,6 @@ var Main = function (_Component) {
 }(__WEBPACK_IMPORTED_MODULE_2_react__["Component"]);
 
 /* unused harmony default export */ var _unused_webpack_default_export = (Main);
-
-var sendRequest = function sendRequest(method, title, description) {
-  var API = 'https://den-playbooks.app/api/';
-  var INDEX_QUERY = 'products';
-  var POST_QUERY = 'products';
-  var PUT_QUERY = 'products/';
-  fetch(API + POST_QUERY, {
-    method: method,
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      title: title,
-      description: description
-    })
-  });
-};
 
 if (document.getElementById('example')) {
   __WEBPACK_IMPORTED_MODULE_3_react_dom___default.a.render(__WEBPACK_IMPORTED_MODULE_2_react___default.a.createElement(Main, null), document.getElementById('example'));
