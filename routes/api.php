@@ -23,12 +23,12 @@ use App\Product;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::get('products', 'ProductsController@index');
+Route::get('products', 'EntryController@index');
  
-Route::get('products/{product}', 'ProductsController@show');
+Route::get('products/{product}', 'EntryController@show');
  
-Route::post('products','ProductsController@store');
+Route::post('products','EntryController@store');
  
-Route::put('products/{product}','ProductsController@update');
+Route::put('products/{product}','EntryController@update');
  
-Route::delete('products/{product}', 'ProductsController@delete');
+Route::delete('products/{product}', 'EntryController@delete');

@@ -6,9 +6,9 @@ export default class TableItem extends Component {
     const index = this.props.index
     const id = this.props.id
     return (<tr>
-          <td>{this.props.id}</td>
-          <td>{this.props.description}</td>
-          <td>{this.props.description}</td>
+          <td>{this.props.item.id}</td>
+          <td>{this.props.item.title}</td>
+          <td>{this.props.item.description}</td>
           <td className="buttons">
             <button className = "btn btn-info" value="Read" onClick={this.props.handle.bind(this, 'read', index, id)}>Read</button>
             <button className = "btn btn-primary" value="Edit" onClick={this.props.handle.bind(this, 'edit', index, id)}>Edit</button>

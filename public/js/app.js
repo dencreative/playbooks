@@ -18559,7 +18559,7 @@ module.exports = ReactPropTypesSecret;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__Grid__ = __webpack_require__(123);
 /* unused harmony reexport Grid */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__HelpBlock__ = __webpack_require__(269);
-/* unused harmony reexport HelpBlock */
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return __WEBPACK_IMPORTED_MODULE_24__HelpBlock__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__Image__ = __webpack_require__(270);
 /* unused harmony reexport Image */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__InputGroup__ = __webpack_require__(271);
@@ -18577,7 +18577,7 @@ module.exports = ReactPropTypesSecret;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_32__MenuItem__ = __webpack_require__(283);
 /* unused harmony reexport MenuItem */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_33__Modal__ = __webpack_require__(284);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return __WEBPACK_IMPORTED_MODULE_33__Modal__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return __WEBPACK_IMPORTED_MODULE_33__Modal__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_34__ModalBody__ = __webpack_require__(129);
 /* unused harmony reexport ModalBody */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_35__ModalFooter__ = __webpack_require__(130);
@@ -22888,17 +22888,17 @@ var TableItem = function (_Component) {
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           'td',
           null,
-          this.props.id
+          this.props.item.id
         ),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           'td',
           null,
-          this.props.description
+          this.props.item.title
         ),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           'td',
           null,
-          this.props.description
+          this.props.item.description
         ),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           'td',
@@ -45351,13 +45351,15 @@ var Main = function (_Component) {
 
   }, {
     key: 'addItem',
-    value: function addItem(newItem) {
+    value: function addItem(newTitle, newDescription) {
 
       var list = this.state.products;
       var displayList = this.state.displayItems;
+
+      // First index because whole list is reversed. See componentDidMount().
       var newId = list[0].id + 1;
 
-      var n = { description: newItem, title: newItem, id: newId
+      var n = { title: newTitle, description: newDescription, id: newId
 
         // Push to display first.
       };displayList.unshift(n);
@@ -45379,10 +45381,8 @@ var Main = function (_Component) {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          title: newItem,
-          price: 100,
-          availability: true,
-          description: newItem
+          title: newTitle,
+          description: newDescription
         })
       });
     }
@@ -45423,6 +45423,24 @@ var Main = function (_Component) {
 }(__WEBPACK_IMPORTED_MODULE_2_react__["Component"]);
 
 /* unused harmony default export */ var _unused_webpack_default_export = (Main);
+
+var sendRequest = function sendRequest(method, title, description) {
+  var API = 'https://den-playbooks.app/api/';
+  var INDEX_QUERY = 'products';
+  var POST_QUERY = 'products';
+  var PUT_QUERY = 'products/';
+  fetch(API + POST_QUERY, {
+    method: method,
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      title: title,
+      description: description
+    })
+  });
+};
 
 if (document.getElementById('example')) {
   __WEBPACK_IMPORTED_MODULE_3_react_dom___default.a.render(__WEBPACK_IMPORTED_MODULE_2_react___default.a.createElement(Main, null), document.getElementById('example'));
@@ -64827,7 +64845,11 @@ module.exports = camelize;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__ = __webpack_require__(98);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -64858,7 +64880,35 @@ var MyModal = function (_Modal) {
   }]);
 
   return MyModal;
-}(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["f" /* Modal */]);
+}(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["g" /* Modal */]);
+
+function FieldGroup(_ref) {
+  var id = _ref.id,
+      label = _ref.label,
+      help = _ref.help,
+      type = _ref.type,
+      props = _objectWithoutProperties(_ref, ['id', 'label', 'help', 'type']);
+
+  return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+    __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["e" /* FormGroup */],
+    { controlId: id },
+    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+      __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["c" /* ControlLabel */],
+      null,
+      label
+    ),
+    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["d" /* FormControl */], _extends({}, props, {
+      autoFocus: props.autoFocus,
+      componentClass: type,
+      onChange: props.onChange.bind(this),
+      onKeyDown: props.onKeyDown.bind(this) })),
+    help && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+      __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["f" /* HelpBlock */],
+      null,
+      help
+    )
+  );
+}
 
 var WriteModal = function (_MyModal) {
   _inherits(WriteModal, _MyModal);
@@ -64869,7 +64919,8 @@ var WriteModal = function (_MyModal) {
     var _this2 = _possibleConstructorReturn(this, (WriteModal.__proto__ || Object.getPrototypeOf(WriteModal)).call(this, props));
 
     _this2.state = {
-      query: ''
+      title: '',
+      description: ''
     };
     return _this2;
   }
@@ -64883,43 +64934,58 @@ var WriteModal = function (_MyModal) {
       }
     }
   }, {
-    key: 'addItem',
-    value: function addItem() {
-      this.props.addItem(this.state.query);
+    key: 'handleChangeTitle',
+    value: function handleChangeTitle(event) {
+      this.setState({
+        title: event.target.value
+      });
     }
   }, {
-    key: 'handleChange',
-    value: function handleChange(event) {
+    key: 'handleChangeDescription',
+    value: function handleChangeDescription(event) {
       this.setState({
-        query: event.target.value
+        description: event.target.value
       });
+    }
+  }, {
+    key: 'addItem',
+    value: function addItem() {
+      this.props.addItem(this.state.title, this.state.description);
     }
   }, {
     key: 'render',
     value: function render() {
       return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-        __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["f" /* Modal */],
+        __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["g" /* Modal */],
         { animation: false, show: this.props.show, onHide: this.handleClose.bind(this) },
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["f" /* Modal */].Body,
+          __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["g" /* Modal */].Header,
           null,
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-            __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["e" /* FormGroup */],
-            { controlId: 'formControlsTextarea' },
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-              __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["c" /* ControlLabel */],
-              null,
-              'Add new entry.'
-            ),
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["d" /* FormControl */], { componentClass: 'textarea',
-              placeholder: 'New item',
-              autoFocus: true,
-              onChange: this.handleChange.bind(this),
-              onKeyDown: this.handleKeyPress.bind(this) })
-          )
+          'Add Entry'
         ),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["f" /* Modal */].Footer,
+          __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["g" /* Modal */].Body,
+          null,
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(FieldGroup, {
+            id: 'titleForm',
+            type: 'input',
+            label: 'Title',
+            placeholder: 'Enter text',
+            autoFocus: true,
+            onChange: this.handleChangeTitle.bind(this),
+            onKeyDown: this.handleKeyPress.bind(this)
+          }),
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(FieldGroup, {
+            id: 'descriptionForm',
+            type: 'textarea',
+            label: 'Description',
+            placeholder: 'Enter text',
+            onChange: this.handleChangeDescription.bind(this),
+            onKeyDown: this.handleKeyPress.bind(this)
+          })
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["g" /* Modal */].Footer,
           null,
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["b" /* Button */],
@@ -64928,7 +64994,7 @@ var WriteModal = function (_MyModal) {
           ),
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["b" /* Button */],
-            { bsStyle: 'primary', onClick: this.addItem.bind(this), onKeyPress: this.handleKeyPress },
+            { type: 'submit', bsStyle: 'primary', onClick: this.addItem.bind(this), onKeyPress: this.handleKeyPress },
             'Submit'
           )
         )
@@ -64952,10 +65018,10 @@ var ReadModal = function (_MyModal2) {
     key: 'render',
     value: function render() {
       return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-        __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["f" /* Modal */],
+        __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["g" /* Modal */],
         { animation: false, show: this.props.show, onHide: this.handleClose.bind(this) },
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["f" /* Modal */].Body,
+          __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["g" /* Modal */].Body,
           null,
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             'p',
@@ -64964,7 +65030,7 @@ var ReadModal = function (_MyModal2) {
           )
         ),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["f" /* Modal */].Footer,
+          __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["g" /* Modal */].Footer,
           null,
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["b" /* Button */],
@@ -64997,10 +65063,10 @@ var DeleteModal = function (_MyModal3) {
     key: 'render',
     value: function render() {
       return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-        __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["f" /* Modal */],
+        __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["g" /* Modal */],
         { animation: false, show: this.props.show, onHide: this.handleClose.bind(this) },
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["f" /* Modal */].Body,
+          __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["g" /* Modal */].Body,
           null,
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             'p',
@@ -65009,7 +65075,7 @@ var DeleteModal = function (_MyModal3) {
           )
         ),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["f" /* Modal */].Footer,
+          __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["g" /* Modal */].Footer,
           null,
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["b" /* Button */],
@@ -65060,10 +65126,10 @@ var EditModal = function (_MyModal4) {
     value: function render() {
       var value = !this.state.query ? this.props.item[0] : this.state.query;
       return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-        __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["f" /* Modal */],
+        __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["g" /* Modal */],
         { animation: false, show: this.props.show, onHide: this.handleClose.bind(this) },
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["f" /* Modal */].Body,
+          __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["g" /* Modal */].Body,
           null,
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["e" /* FormGroup */],
@@ -65077,7 +65143,7 @@ var EditModal = function (_MyModal4) {
           )
         ),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["f" /* Modal */].Footer,
+          __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["g" /* Modal */].Footer,
           null,
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["b" /* Button */],
@@ -69801,7 +69867,7 @@ var HelpBlock = function (_React$Component) {
   return HelpBlock;
 }(__WEBPACK_IMPORTED_MODULE_6_react___default.a.Component);
 
-/* unused harmony default export */ var _unused_webpack_default_export = (Object(__WEBPACK_IMPORTED_MODULE_7__utils_bootstrapUtils__["a" /* bsClass */])('help-block', HelpBlock));
+/* harmony default export */ __webpack_exports__["a"] = (Object(__WEBPACK_IMPORTED_MODULE_7__utils_bootstrapUtils__["a" /* bsClass */])('help-block', HelpBlock));
 
 /***/ }),
 /* 270 */
@@ -77279,6 +77345,7 @@ function ToolBar(props) {
   var onClick = function onClick() {
     return props.handle.bind(_this, 'write');
   };
+
   return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
     'div',
     { className: 'row' },
@@ -77358,8 +77425,7 @@ function Table(props) {
       'tbody',
       null,
       props.items.map(function (item, index) {
-        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__TableItem__["a" /* default */], { description: item.description,
-          id: item.id,
+        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__TableItem__["a" /* default */], { item: item,
           index: index,
           handle: props.handle.bind(_this),
           key: index });

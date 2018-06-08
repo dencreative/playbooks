@@ -124,14 +124,15 @@ class Main extends Component {
   }
 
   // Add entry if confirmed.
-  addItem(newItem) {
-
+  addItem(newTitle, newDescription) {
 
     let list =  this.state.products;
     let displayList = this.state.displayItems
+
+    // First index because whole list is reversed. See componentDidMount().
     let newId = list[0].id + 1;
 
-    const n = {description:newItem, title:newItem, id:newId}
+    const n = {title:newTitle, description:newDescription, id:newId}
 
     // Push to display first.
     displayList.unshift(n)
@@ -153,10 +154,8 @@ class Main extends Component {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        title: newItem,
-        price: 100,
-        availability: true,
-        description: newItem
+        title: newTitle,
+        description: newDescription
       })
     })
   }
@@ -196,6 +195,25 @@ class Main extends Component {
 }
 
 export default Main;
+
+const sendRequest = (method, title, description) => {
+  const API = 'https://den-playbooks.app/api/';
+  const INDEX_QUERY = 'products';
+  const POST_QUERY = 'products';
+  const PUT_QUERY = 'products/'
+  fetch(API + POST_QUERY, {
+    method: method,
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      title: title,
+      description: description
+    })
+  })
+}
+
 
 if (document.getElementById('example')) {
     ReactDOM.render(<Main />, document.getElementById('example'));

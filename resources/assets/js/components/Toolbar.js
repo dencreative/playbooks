@@ -6,7 +6,8 @@ import TableItem from './TableItem';
 export default function ToolBar(props) {
 
   const onClick = () => props.handle.bind(this, 'write')
-	return(
+	
+  return(
 		<div className="row">
       <div className="col-sm"> 
         <input className="form-control form-control-lg" 

@@ -10,12 +10,28 @@ class MyModal extends Modal {
   }
 }
 
+function FieldGroup({ id, label, help, type, ...props }) {
+  return (
+    <FormGroup controlId={id}>
+      <ControlLabel>{label}</ControlLabel>
+      <FormControl {...props} 
+                    autoFocus = {props.autoFocus}
+                    componentClass={type}
+                    onChange={props.onChange.bind(this)} 
+                    onKeyDown={props.onKeyDown.bind(this)}/>
+      {help && <HelpBlock>{help}</HelpBlock>}
+    </FormGroup>
+  );
+}
+
+
 export class WriteModal extends MyModal {
 
   constructor(props) {
     super(props)
     this.state = {
-      query: ''
+      title: '',
+      description: '',
     }
   }
 
@@ -26,32 +42,63 @@ export class WriteModal extends MyModal {
     }
   }
 
-  addItem() {
-    this.props.addItem(this.state.query)
+  handleChangeTitle(event) {
+    this.setState({
+      title: event.target.value
+    })
   }
 
-  handleChange(event) {
+  handleChangeDescription(event) {
     this.setState({
-      query: event.target.value
+      description: event.target.value
     })
+  }
+
+  addItem() {
+    this.props.addItem(this.state.title, this.state.description)
   }
 
   render() {
     return (
       <Modal animation = {false} show={this.props.show} onHide={this.handleClose.bind(this)}>
+          <Modal.Header>Add Entry</Modal.Header>
           <Modal.Body>
-            <FormGroup controlId="formControlsTextarea">
+            <FieldGroup
+                id="titleForm"
+                type="input"
+                label="Title"
+                placeholder="Enter text"
+                autoFocus = {true}
+                onChange={this.handleChangeTitle.bind(this)} 
+                onKeyDown={this.handleKeyPress.bind(this)}
+              />
+            <FieldGroup
+                id="descriptionForm"
+                type="textarea"
+                label="Description"
+                placeholder="Enter text"
+                onChange={this.handleChangeDescription.bind(this)} 
+                onKeyDown={this.handleKeyPress.bind(this)}
+              />
+            {/*<FormGroup controlId="formControlsTextarea" 
+                       validationState={this.getValidationState()}>
               <ControlLabel>Add new entry.</ControlLabel>
-              <FormControl componentClass="textarea" 
-                           placeholder="New item" 
+
+              <FormControl componentClass="input" 
+                           placeholder="New title" 
                            autoFocus = {true} 
-                           onChange={this.handleChange.bind(this)} 
+                           onChange={this.handleChangeTitle.bind(this)} 
                            onKeyDown={this.handleKeyPress.bind(this)}/>
-            </FormGroup>
+              <FormControl componentClass="textarea" 
+                           placeholder="New description" 
+                           onChange={this.handleChangeDescription.bind(this)} 
+                           onKeyDown={this.handleKeyPress.bind(this)}/>
+              <HelpBlock>Fill out both fields.</HelpBlock>
+            </FormGroup>*/}
           </Modal.Body>
           <Modal.Footer>
             <Button onClick={this.handleClose.bind(this)}>Cancel</Button>
-            <Button bsStyle="primary" onClick={this.addItem.bind(this)} onKeyPress={this.handleKeyPress}>Submit</Button>
+            <Button type = "submit" bsStyle="primary" onClick={this.addItem.bind(this)} onKeyPress={this.handleKeyPress}>Submit</Button>
           </Modal.Footer>
         </Modal>
     );
@@ -84,7 +131,7 @@ export class DeleteModal extends MyModal {
       <Modal animation = {false} show={this.props.show} onHide={this.handleClose.bind(this)}>
         <Modal.Body>
             <p className = 'text-justify'>Are you sure you want to remove this entry?</p>
-          </Modal.Body>
+        </Modal.Body>
         <Modal.Footer>
           <Button onClick={this.handleClose.bind(this)}>Cancel</Button>
           <Button bsStyle="primary" onClick={this.removeItem.bind(this)}>Delete</Button>

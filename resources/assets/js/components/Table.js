@@ -16,8 +16,7 @@ export default function Table(props) {
       <tbody>
         {
           props.items.map((item,index) => 
-            <TableItem description={item.description}
-                       id={item.id} 
+            <TableItem item={item} 
                        index={index} 
                        handle={props.handle.bind(this)}
                        key={index}/>) 
