@@ -64845,17 +64845,17 @@ module.exports = camelize;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__ = __webpack_require__(98);
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Alert__ = __webpack_require__(341);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__FieldGroup__ = __webpack_require__(347);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
 
 
 
@@ -64882,34 +64882,6 @@ var MyModal = function (_Modal) {
   return MyModal;
 }(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["g" /* Modal */]);
 
-function FieldGroup(_ref) {
-  var id = _ref.id,
-      label = _ref.label,
-      help = _ref.help,
-      type = _ref.type,
-      props = _objectWithoutProperties(_ref, ['id', 'label', 'help', 'type']);
-
-  return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-    __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["e" /* FormGroup */],
-    { controlId: id },
-    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-      __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["c" /* ControlLabel */],
-      null,
-      label
-    ),
-    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["d" /* FormControl */], _extends({}, props, {
-      autoFocus: props.autoFocus,
-      componentClass: type,
-      onChange: props.onChange.bind(this),
-      onKeyDown: props.onKeyDown.bind(this) })),
-    help && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-      __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["f" /* HelpBlock */],
-      null,
-      help
-    )
-  );
-}
-
 var WriteModal = function (_MyModal) {
   _inherits(WriteModal, _MyModal);
 
@@ -64920,7 +64892,8 @@ var WriteModal = function (_MyModal) {
 
     _this2.state = {
       title: '',
-      description: ''
+      description: '',
+      warn: false
     };
     return _this2;
   }
@@ -64955,6 +64928,7 @@ var WriteModal = function (_MyModal) {
   }, {
     key: 'render',
     value: function render() {
+      this.state.title.length != 0 && this.state.description.length != 0;
       return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["g" /* Modal */],
         { animation: false, show: this.props.show, onHide: this.handleClose.bind(this) },
@@ -64966,7 +64940,7 @@ var WriteModal = function (_MyModal) {
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["g" /* Modal */].Body,
           null,
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(FieldGroup, {
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__FieldGroup__["a" /* default */], {
             id: 'titleForm',
             type: 'input',
             label: 'Title',
@@ -64975,12 +64949,13 @@ var WriteModal = function (_MyModal) {
             onChange: this.handleChangeTitle.bind(this),
             onKeyDown: this.handleKeyPress.bind(this)
           }),
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(FieldGroup, {
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__FieldGroup__["a" /* default */], {
             id: 'descriptionForm',
             type: 'textarea',
             label: 'Description',
             placeholder: 'Enter text',
-            onChange: this.handleChangeDescription.bind(this),
+            warn: false //TODO
+            , onChange: this.handleChangeDescription.bind(this),
             onKeyDown: this.handleKeyPress.bind(this)
           })
         ),
@@ -65023,6 +64998,21 @@ var ReadModal = function (_MyModal2) {
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["g" /* Modal */].Body,
           null,
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'h5',
+            null,
+            'Title:'
+          ),
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'p',
+            { className: 'text-justify' },
+            this.props.item.title
+          ),
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'h5',
+            null,
+            'Description:'
+          ),
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             'p',
             { className: 'text-justify' },
@@ -65110,16 +65100,31 @@ var EditModal = function (_MyModal4) {
   }
 
   _createClass(EditModal, [{
+    key: 'handleKeyPress',
+    value: function handleKeyPress(e) {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        this.updateItem();
+      }
+    }
+  }, {
+    key: 'handleChangeTitle',
+    value: function handleChangeTitle(event) {
+      this.setState({
+        title: event.target.value
+      });
+    }
+  }, {
+    key: 'handleChangeDescription',
+    value: function handleChangeDescription(event) {
+      this.setState({
+        description: event.target.value
+      });
+    }
+  }, {
     key: 'updateItem',
     value: function updateItem() {
       this.props.updateItem(this.state.query, this.props.item[1]);
-    }
-  }, {
-    key: 'handleChange',
-    value: function handleChange(event) {
-      this.setState({
-        query: event.target.value
-      });
     }
   }, {
     key: 'render',
@@ -65131,16 +65136,24 @@ var EditModal = function (_MyModal4) {
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["g" /* Modal */].Body,
           null,
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-            __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["e" /* FormGroup */],
-            { controlId: 'formControlsTextarea' },
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-              __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["c" /* ControlLabel */],
-              null,
-              'Edit your component.'
-            ),
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["d" /* FormControl */], { componentClass: 'textarea', placeholder: this.props.item[0], value: value, autoFocus: true, onChange: this.handleChange.bind(this) })
-          )
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__FieldGroup__["a" /* default */], {
+            id: 'titleForm',
+            type: 'input',
+            label: 'Title',
+            placeholder: this.props.item.title,
+            autoFocus: true,
+            onChange: this.handleChangeTitle.bind(this),
+            onKeyDown: this.handleKeyPress.bind(this)
+          }),
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__FieldGroup__["a" /* default */], {
+            id: 'descriptionForm',
+            type: 'textarea',
+            label: 'Description',
+            placeholder: this.props.item.description,
+            warn: false //TODO
+            , onChange: this.handleChangeDescription.bind(this),
+            onKeyDown: this.handleKeyPress.bind(this)
+          })
         ),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["g" /* Modal */].Footer,
@@ -77475,6 +77488,17 @@ function Alert(props) {
 					),
 					' Changes saved.'
 				);
+			case 'warning':
+				return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+					'div',
+					null,
+					__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+						'strong',
+						null,
+						'Warning!'
+					),
+					' Fill out both fields.'
+				);
 		}
 	};
 
@@ -77493,6 +77517,62 @@ function Alert(props) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 344 */,
+/* 345 */,
+/* 346 */,
+/* 347 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (immutable) */ __webpack_exports__["a"] = FieldGroup;
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__ = __webpack_require__(98);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Alert__ = __webpack_require__(341);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
+
+
+
+
+// Field group component.
+function FieldGroup(_ref) {
+  var id = _ref.id,
+      label = _ref.label,
+      help = _ref.help,
+      type = _ref.type,
+      warn = _ref.warn,
+      props = _objectWithoutProperties(_ref, ['id', 'label', 'help', 'type', 'warn']);
+
+  return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+    'div',
+    null,
+    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+      __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["e" /* FormGroup */],
+      { controlId: id },
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["c" /* ControlLabel */],
+        null,
+        label
+      ),
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["d" /* FormControl */], _extends({}, props, {
+        autoFocus: props.autoFocus,
+        componentClass: type,
+        onChange: props.onChange.bind(this),
+        onKeyDown: props.onKeyDown.bind(this) })),
+      help && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["f" /* HelpBlock */],
+        null,
+        help
+      )
+    ),
+    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__Alert__["a" /* default */], { type: 'warning', warn: type === 'textarea' && warn === true })
+  );
+}
 
 /***/ })
 /******/ ]);

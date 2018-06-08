@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { Modal, Button , FormGroup, FormControl, ControlLabel, HelpBlock} from 'react-bootstrap';
+import { Modal, Button , FormGroup, FormControl, ControlLabel, HelpBlock, PageHeader} from 'react-bootstrap';
+import Alert from './Alert'
+import FieldGroup from './FieldGroup'
 
 // Abstract modal class.
 class MyModal extends Modal {
@@ -10,21 +12,6 @@ class MyModal extends Modal {
   }
 }
 
-function FieldGroup({ id, label, help, type, ...props }) {
-  return (
-    <FormGroup controlId={id}>
-      <ControlLabel>{label}</ControlLabel>
-      <FormControl {...props} 
-                    autoFocus = {props.autoFocus}
-                    componentClass={type}
-                    onChange={props.onChange.bind(this)} 
-                    onKeyDown={props.onKeyDown.bind(this)}/>
-      {help && <HelpBlock>{help}</HelpBlock>}
-    </FormGroup>
-  );
-}
-
-
 export class WriteModal extends MyModal {
 
   constructor(props) {
@@ -32,6 +19,7 @@ export class WriteModal extends MyModal {
     this.state = {
       title: '',
       description: '',
+      warn: false,
     }
   }
 
@@ -59,6 +47,7 @@ export class WriteModal extends MyModal {
   }
 
   render() {
+    this.state.title.length != 0 && this.state.description.length != 0
     return (
       <Modal animation = {false} show={this.props.show} onHide={this.handleClose.bind(this)}>
           <Modal.Header>Add Entry</Modal.Header>
@@ -77,24 +66,10 @@ export class WriteModal extends MyModal {
                 type="textarea"
                 label="Description"
                 placeholder="Enter text"
+                warn = {false} //TODO
                 onChange={this.handleChangeDescription.bind(this)} 
                 onKeyDown={this.handleKeyPress.bind(this)}
               />
-            {/*<FormGroup controlId="formControlsTextarea" 
-                       validationState={this.getValidationState()}>
-              <ControlLabel>Add new entry.</ControlLabel>
-
-              <FormControl componentClass="input" 
-                           placeholder="New title" 
-                           autoFocus = {true} 
-                           onChange={this.handleChangeTitle.bind(this)} 
-                           onKeyDown={this.handleKeyPress.bind(this)}/>
-              <FormControl componentClass="textarea" 
-                           placeholder="New description" 
-                           onChange={this.handleChangeDescription.bind(this)} 
-                           onKeyDown={this.handleKeyPress.bind(this)}/>
-              <HelpBlock>Fill out both fields.</HelpBlock>
-            </FormGroup>*/}
           </Modal.Body>
           <Modal.Footer>
             <Button onClick={this.handleClose.bind(this)}>Cancel</Button>
@@ -110,6 +85,10 @@ export class ReadModal extends MyModal {
     return (
       <Modal animation = {false} show={this.props.show} onHide={this.handleClose.bind(this)}>
           <Modal.Body>
+            <h5>Title:</h5>
+            <p className='text-justify'>{this.props.item.title}</p>
+
+            <h5>Description:</h5>
             <p className='text-justify'>{this.props.item.description}</p>
           </Modal.Body>
           <Modal.Footer>
@@ -150,14 +129,27 @@ export class EditModal extends MyModal {
     }
   }
 
-  updateItem() {
-    this.props.updateItem(this.state.query, this.props.item[1])
+  handleKeyPress(e) {
+    if (e.key === "Enter") {
+      e.preventDefault()
+      this.updateItem()
+    }
   }
 
-  handleChange(event) {
+  handleChangeTitle(event) {
     this.setState({
-      query: event.target.value
+      title: event.target.value
     })
+  }
+
+  handleChangeDescription(event) {
+    this.setState({
+      description: event.target.value
+    })
+  }
+
+  updateItem() {
+    this.props.updateItem(this.state.query, this.props.item[1])
   }
 
   render() {
@@ -165,10 +157,29 @@ export class EditModal extends MyModal {
     return (
       <Modal animation = {false} show={this.props.show} onHide={this.handleClose.bind(this)}>
           <Modal.Body>
-            <FormGroup controlId="formControlsTextarea">
+            <FieldGroup
+                id="titleForm"
+                type="input"
+                label="Title"
+                placeholder={this.props.item.title}
+                autoFocus = {true}
+                onChange={this.handleChangeTitle.bind(this)} 
+                onKeyDown={this.handleKeyPress.bind(this)}
+              />
+            <FieldGroup
+                id="descriptionForm"
+                type="textarea"
+                label="Description"
+                placeholder={this.props.item.description}
+                warn = {false} //TODO
+                onChange={this.handleChangeDescription.bind(this)} 
+                onKeyDown={this.handleKeyPress.bind(this)}
+              />
+
+            {/*<FormGroup controlId="formControlsTextarea">
               <ControlLabel>Edit your component.</ControlLabel>
               <FormControl componentClass="textarea" placeholder={this.props.item[0]} value={value} autoFocus = {true} onChange={this.handleChange.bind(this)}/>
-            </FormGroup>
+            </FormGroup>*/}
           </Modal.Body>
           <Modal.Footer>
             <Button onClick={this.handleClose.bind(this)}>Cancel</Button>

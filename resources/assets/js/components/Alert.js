@@ -9,6 +9,7 @@ export default function Alert(props) {
 		switch (type) {
 			case 'danger': return <div><strong>Sorry!</strong> No items found.</div>
 			case 'info': return <div><strong>Success!</strong> Changes saved.</div>
+      case 'warning': return <div><strong>Warning!</strong> Fill out both fields.</div>
 		}
 	}
 
