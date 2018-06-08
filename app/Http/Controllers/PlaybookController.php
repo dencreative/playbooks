@@ -23,7 +23,7 @@ class PlaybookController extends Controller
      */
     public function index()
     {
-        return view('playbook');
+        return view('new-playbook');
     }
 
     /**

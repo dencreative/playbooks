@@ -1,9 +1,4 @@
-import 'bootstrap/dist/css/bootstrap.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
-
-// Put any other imports below so that CSS from your
-// components takes precedence over default styles.
-
+// Components.
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import {ReadModal, MODALS} from './Modals';
@@ -11,35 +6,11 @@ import ToolBar from './ToolBar';
 import Table from './Table';
 import Alert from './Alert';
 
+// Utility functions.
+import { sendRequest } from './utils'
+
 const API = 'https://den-playbooks.app/api/';
 const INDEX_QUERY = 'entries'
-
-const sendRequest = (method, id, item, description) => {
-
-  // Decide endpoint.
-  let QUERY = '';
-  switch (method) {
-    case ('GET'): QUERY = 'entries'; break;
-    case ('POST'): QUERY = 'entries'; break;
-    case ('PUT'): QUERY = 'entries/'; break;
-    case ('DELETE'): QUERY = 'entries/'; break;
-  };
-
-  const headers = {
-    'Accept': 'application/json',
-    'Content-Type': 'application/json'
-  };
-
-  // Send request.
-  fetch(API + QUERY + id, {
-    method: method,
-    headers: headers,
-    body: JSON.stringify({
-      title: item,
-      description: description
-    })
-  }).then(response => console.log(response))
-}
 
 class Main extends Component {
 
@@ -172,9 +143,9 @@ class Main extends Component {
     const Modal = (this.state.mode === '') ? ReadModal : MODALS[this.state.mode]
 
     return (
-      <div>
-        <div className="container-fluid">
-          
+      <div className="todo">
+        <div className="card">
+
           <ToolBar buildList={this.buildList.bind(this)} 
                    handle={this.handleChange.bind(this)}/>
 
@@ -183,13 +154,13 @@ class Main extends Component {
           
           <Alert type="danger" warn={this.state.displayItems.length===0 && query}/> 
 
-        </div>
         <Modal item = {this.state.item}
                show={this.state.showModal} 
                handleCloseModal={this.handleCloseModal.bind(this)}
                removeItem={this.removeItem.bind(this)}
                updateItem={this.updateItem.bind(this)}
                addItem={this.addItem.bind(this)}/>
+        </div>
       </div>
     );
   }
