@@ -45200,9 +45200,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
 var API = 'https://den-playbooks.app/api/';
-var INDEX_QUERY = 'products';
-var POST_QUERY = 'products';
-var PUT_QUERY = 'products/';
+var INDEX_QUERY = 'entries';
+var POST_QUERY = 'entries';
+var PUT_QUERY = 'entries/';
 
 var Main = function (_Component) {
   _inherits(Main, _Component);
@@ -45308,8 +45308,10 @@ var Main = function (_Component) {
 
   }, {
     key: 'updateItem',
-    value: function updateItem(newItem) {
+    value: function updateItem(newTitle, newDescription) {
       var _this3 = this;
+
+      console.log(newDescription);
 
       var id = this.state.item.id;
 
@@ -45318,7 +45320,8 @@ var Main = function (_Component) {
 
       var f = function f(e) {
         if (e == _this3.state.item) {
-          e.description = newItem;
+          e.title = newTitle;
+          e.description = newDescription;
         }
       };
 
@@ -45339,10 +45342,8 @@ var Main = function (_Component) {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          title: newItem,
-          price: 100,
-          availability: true,
-          description: newItem
+          title: newTitle,
+          description: newDescription
         })
       });
     }
@@ -45356,7 +45357,7 @@ var Main = function (_Component) {
       var list = this.state.products;
       var displayList = this.state.displayItems;
 
-      // First index because whole list is reversed. See componentDidMount().
+      // First index because whole list is reversed. See componentDidMount.
       var newId = list[0].id + 1;
 
       var n = { title: newTitle, description: newDescription, id: newId
@@ -45395,7 +45396,7 @@ var Main = function (_Component) {
       var items = !query ? this.state.products : this.state.displayItems;
 
       // Decides the type of modal at runtime.
-      var Modal = this.state.mode === '' ? __WEBPACK_IMPORTED_MODULE_4__Modals__["b" /* ReadModal */] : __WEBPACK_IMPORTED_MODULE_4__Modals__["a" /* MODALS */][this.state.mode];
+      var Modal = this.state.mode === '' ? __WEBPACK_IMPORTED_MODULE_4__Modals__["d" /* ReadModal */] : __WEBPACK_IMPORTED_MODULE_4__Modals__["c" /* MODALS */][this.state.mode];
 
       return __WEBPACK_IMPORTED_MODULE_2_react___default.a.createElement(
         'div',
@@ -64837,16 +64838,17 @@ module.exports = camelize;
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* unused harmony export WriteModal */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return ReadModal; });
-/* unused harmony export DeleteModal */
-/* unused harmony export EditModal */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MODALS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return WriteModal; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return ReadModal; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DeleteModal; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return EditModal; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return MODALS; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__ = __webpack_require__(98);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Alert__ = __webpack_require__(341);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__FieldGroup__ = __webpack_require__(347);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__AbstractModals__ = __webpack_require__(348);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -64860,67 +64862,18 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
 
-// Abstract modal class.
 
-var MyModal = function (_Modal) {
-  _inherits(MyModal, _Modal);
 
-  function MyModal() {
-    _classCallCheck(this, MyModal);
+var WriteModal = function (_EditingModal) {
+  _inherits(WriteModal, _EditingModal);
 
-    return _possibleConstructorReturn(this, (MyModal.__proto__ || Object.getPrototypeOf(MyModal)).apply(this, arguments));
-  }
-
-  _createClass(MyModal, [{
-    key: 'handleClose',
-    value: function handleClose() {
-      console.log(this);
-      this.props.handleCloseModal();
-    }
-  }]);
-
-  return MyModal;
-}(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["g" /* Modal */]);
-
-var WriteModal = function (_MyModal) {
-  _inherits(WriteModal, _MyModal);
-
-  function WriteModal(props) {
+  function WriteModal() {
     _classCallCheck(this, WriteModal);
 
-    var _this2 = _possibleConstructorReturn(this, (WriteModal.__proto__ || Object.getPrototypeOf(WriteModal)).call(this, props));
-
-    _this2.state = {
-      title: '',
-      description: '',
-      warn: false
-    };
-    return _this2;
+    return _possibleConstructorReturn(this, (WriteModal.__proto__ || Object.getPrototypeOf(WriteModal)).apply(this, arguments));
   }
 
   _createClass(WriteModal, [{
-    key: 'handleKeyPress',
-    value: function handleKeyPress(e) {
-      if (e.key === "Enter") {
-        e.preventDefault();
-        this.addItem();
-      }
-    }
-  }, {
-    key: 'handleChangeTitle',
-    value: function handleChangeTitle(event) {
-      this.setState({
-        title: event.target.value
-      });
-    }
-  }, {
-    key: 'handleChangeDescription',
-    value: function handleChangeDescription(event) {
-      this.setState({
-        description: event.target.value
-      });
-    }
-  }, {
     key: 'addItem',
     value: function addItem() {
       this.props.addItem(this.state.title, this.state.description);
@@ -64928,7 +64881,6 @@ var WriteModal = function (_MyModal) {
   }, {
     key: 'render',
     value: function render() {
-      this.state.title.length != 0 && this.state.description.length != 0;
       return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["g" /* Modal */],
         { animation: false, show: this.props.show, onHide: this.handleClose.bind(this) },
@@ -64969,7 +64921,7 @@ var WriteModal = function (_MyModal) {
           ),
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["b" /* Button */],
-            { type: 'submit', bsStyle: 'primary', onClick: this.addItem.bind(this), onKeyPress: this.handleKeyPress },
+            { type: 'submit', bsStyle: 'primary', onClick: this.triggerAction.bind(this), onKeyPress: this.handleKeyPress },
             'Submit'
           )
         )
@@ -64978,10 +64930,10 @@ var WriteModal = function (_MyModal) {
   }]);
 
   return WriteModal;
-}(MyModal);
+}(__WEBPACK_IMPORTED_MODULE_4__AbstractModals__["a" /* EditingModal */]);
 
-var ReadModal = function (_MyModal2) {
-  _inherits(ReadModal, _MyModal2);
+var ReadModal = function (_MyModal) {
+  _inherits(ReadModal, _MyModal);
 
   function ReadModal() {
     _classCallCheck(this, ReadModal);
@@ -64994,7 +64946,10 @@ var ReadModal = function (_MyModal2) {
     value: function render() {
       return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["g" /* Modal */],
-        { animation: false, show: this.props.show, onHide: this.handleClose.bind(this) },
+        { animation: false,
+          show: this.props.show,
+          onHide: this.handleClose.bind(this),
+          onKeyDown: this.handleKeyPress.bind(this) },
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["g" /* Modal */].Body,
           null,
@@ -65033,10 +64988,10 @@ var ReadModal = function (_MyModal2) {
   }]);
 
   return ReadModal;
-}(MyModal);
+}(__WEBPACK_IMPORTED_MODULE_4__AbstractModals__["b" /* MyModal */]);
 
-var DeleteModal = function (_MyModal3) {
-  _inherits(DeleteModal, _MyModal3);
+var DeleteModal = function (_MyModal2) {
+  _inherits(DeleteModal, _MyModal2);
 
   function DeleteModal() {
     _classCallCheck(this, DeleteModal);
@@ -65054,7 +65009,10 @@ var DeleteModal = function (_MyModal3) {
     value: function render() {
       return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["g" /* Modal */],
-        { animation: false, show: this.props.show, onHide: this.handleClose.bind(this) },
+        { animation: false,
+          show: this.props.show,
+          onHide: this.handleClose.bind(this),
+          onKeyDown: this.handleKeyPress.bind(this) },
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["g" /* Modal */].Body,
           null,
@@ -65083,48 +65041,21 @@ var DeleteModal = function (_MyModal3) {
   }]);
 
   return DeleteModal;
-}(MyModal);
+}(__WEBPACK_IMPORTED_MODULE_4__AbstractModals__["b" /* MyModal */]);
 
-var EditModal = function (_MyModal4) {
-  _inherits(EditModal, _MyModal4);
+var EditModal = function (_EditingModal2) {
+  _inherits(EditModal, _EditingModal2);
 
-  function EditModal(props) {
+  function EditModal() {
     _classCallCheck(this, EditModal);
 
-    var _this5 = _possibleConstructorReturn(this, (EditModal.__proto__ || Object.getPrototypeOf(EditModal)).call(this, props));
-
-    _this5.state = {
-      query: ''
-    };
-    return _this5;
+    return _possibleConstructorReturn(this, (EditModal.__proto__ || Object.getPrototypeOf(EditModal)).apply(this, arguments));
   }
 
   _createClass(EditModal, [{
-    key: 'handleKeyPress',
-    value: function handleKeyPress(e) {
-      if (e.key === "Enter") {
-        e.preventDefault();
-        this.updateItem();
-      }
-    }
-  }, {
-    key: 'handleChangeTitle',
-    value: function handleChangeTitle(event) {
-      this.setState({
-        title: event.target.value
-      });
-    }
-  }, {
-    key: 'handleChangeDescription',
-    value: function handleChangeDescription(event) {
-      this.setState({
-        description: event.target.value
-      });
-    }
-  }, {
     key: 'updateItem',
     value: function updateItem() {
-      this.props.updateItem(this.state.query, this.props.item[1]);
+      this.props.updateItem(this.state.title, this.state.description);
     }
   }, {
     key: 'render',
@@ -65174,7 +65105,7 @@ var EditModal = function (_MyModal4) {
   }]);
 
   return EditModal;
-}(MyModal);
+}(__WEBPACK_IMPORTED_MODULE_4__AbstractModals__["a" /* EditingModal */]);
 
 var MODALS = {
   read: ReadModal,
@@ -77573,6 +77504,103 @@ function FieldGroup(_ref) {
     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__Alert__["a" /* default */], { type: 'warning', warn: type === 'textarea' && warn === true })
   );
 }
+
+/***/ }),
+/* 348 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return MyModal; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return EditingModal; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__ = __webpack_require__(98);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Modals__ = __webpack_require__(189);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+
+
+// General abstract modal class.
+var MyModal = function (_Modal) {
+  _inherits(MyModal, _Modal);
+
+  function MyModal() {
+    _classCallCheck(this, MyModal);
+
+    return _possibleConstructorReturn(this, (MyModal.__proto__ || Object.getPrototypeOf(MyModal)).apply(this, arguments));
+  }
+
+  _createClass(MyModal, [{
+    key: 'handleClose',
+    value: function handleClose() {
+      console.log(this);
+      this.props.handleCloseModal();
+    }
+  }, {
+    key: 'triggerAction',
+    value: function triggerAction() {
+      if (this instanceof __WEBPACK_IMPORTED_MODULE_2__Modals__["e" /* WriteModal */]) this.addItem();
+      if (this instanceof __WEBPACK_IMPORTED_MODULE_2__Modals__["b" /* EditModal */]) this.updateItem();
+      if (this instanceof __WEBPACK_IMPORTED_MODULE_2__Modals__["a" /* DeleteModal */]) this.removeItem();
+      if (this instanceof __WEBPACK_IMPORTED_MODULE_2__Modals__["d" /* ReadModal */]) this.handleClose();
+    }
+  }, {
+    key: 'handleKeyPress',
+    value: function handleKeyPress(e) {
+      var key = e.key;
+      if (key === "Enter") {
+        e.preventDefault();
+        this.triggerAction();
+      } else if (key === "Escape") this.handleClose();
+    }
+  }]);
+
+  return MyModal;
+}(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["g" /* Modal */]);
+
+// Abstract modal class that support form modification.
+var EditingModal = function (_MyModal) {
+  _inherits(EditingModal, _MyModal);
+
+  function EditingModal(props) {
+    _classCallCheck(this, EditingModal);
+
+    var _this2 = _possibleConstructorReturn(this, (EditingModal.__proto__ || Object.getPrototypeOf(EditingModal)).call(this, props));
+
+    _this2.state = {
+      title: '',
+      description: '',
+      warn: false
+    };
+    return _this2;
+  }
+
+  _createClass(EditingModal, [{
+    key: 'handleChangeTitle',
+    value: function handleChangeTitle(event) {
+      this.setState({
+        title: event.target.value
+      });
+    }
+  }, {
+    key: 'handleChangeDescription',
+    value: function handleChangeDescription(event) {
+      this.setState({
+        description: event.target.value
+      });
+    }
+  }]);
+
+  return EditingModal;
+}(MyModal);
 
 /***/ })
 /******/ ]);

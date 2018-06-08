@@ -11,7 +11,7 @@
 **/
 
 use Illuminate\Http\Request;
-use App\Product;
+use App\Entry;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,12 +23,12 @@ use App\Product;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::get('products', 'EntryController@index');
+Route::get('entries', 'EntryController@index');
  
-Route::get('products/{product}', 'EntryController@show');
+Route::get('entries/{entry}', 'EntryController@show');
  
-Route::post('products','EntryController@store');
+Route::post('entries','EntryController@store');
  
-Route::put('products/{product}','EntryController@update');
+Route::put('entries/{entry}','EntryController@update');
  
-Route::delete('products/{product}', 'EntryController@delete');
+Route::delete('entries/{entry}', 'EntryController@delete');

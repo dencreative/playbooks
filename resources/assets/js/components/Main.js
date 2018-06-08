@@ -12,9 +12,9 @@ import Table from './Table';
 import Alert from './Alert';
 
 const API = 'https://den-playbooks.app/api/';
-const INDEX_QUERY = 'products';
-const POST_QUERY = 'products';
-const PUT_QUERY = 'products/'
+const INDEX_QUERY = 'entries';
+const POST_QUERY = 'entries';
+const PUT_QUERY = 'entries/'
 
 class Main extends Component {
 
@@ -86,7 +86,9 @@ class Main extends Component {
   }
 
   // Update the entry if confirmed.
-  updateItem(newItem) {
+  updateItem(newTitle, newDescription) {
+
+    console.log(newDescription)
 
     const id = this.state.item.id
 
@@ -95,7 +97,8 @@ class Main extends Component {
 
     const f = (e) => {
         if (e == this.state.item) { 
-            e.description = newItem }
+            e.title = newTitle
+            e.description = newDescription }
         }
 
     list.map(f)
@@ -115,10 +118,8 @@ class Main extends Component {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        title: newItem,
-        price: 100,
-        availability: true,
-        description: newItem
+        title: newTitle,
+        description: newDescription
       })
     })
   }
@@ -129,7 +130,7 @@ class Main extends Component {
     let list =  this.state.products;
     let displayList = this.state.displayItems
 
-    // First index because whole list is reversed. See componentDidMount().
+    // First index because whole list is reversed. See componentDidMount.
     let newId = list[0].id + 1;
 
     const n = {title:newTitle, description:newDescription, id:newId}
