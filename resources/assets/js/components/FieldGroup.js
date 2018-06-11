@@ -11,8 +11,7 @@ export default function FieldGroup({ id, label, help, type, warn, ...props }) {
         <FormControl {...props} 
                       autoFocus = {props.autoFocus}
                       componentClass={type}
-                      onChange={props.onChange.bind(this)} 
-                      onKeyDown={props.onKeyDown.bind(this)}/>
+                      onChange={props.onChange.bind(this)}/>
         {help && <HelpBlock>{help}</HelpBlock>}
       </FormGroup>
       <Alert type="warning" warn={type === 'textarea' && warn === true}/>

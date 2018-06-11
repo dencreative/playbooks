@@ -9,7 +9,7 @@ export default function ToolBar(props) {
   return(
 
 		<div className="toolbar toolbar--inner">
-      <div className="toolbar__label">29 Total todo lists</div>
+      <div className="toolbar__label">{props.total} Entries</div>
 
       <div className="actions">
           <i className="actions__item zmdi zmdi-search" data-ma-action="toolbar-search-open"></i>
@@ -31,6 +31,10 @@ export default function ToolBar(props) {
 
           <i className="toolbar__search__close zmdi zmdi-long-arrow-left" data-ma-action="toolbar-search-close"></i>
       </div>
+
+       <button className="btn btn-primary btn--action btn--fixed zmdi zmdi-plus"
+               onClick={props.handle.bind(this, 'write')}> 
+        </button>
   </div>
 	)
 }

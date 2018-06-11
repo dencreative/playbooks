@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { DropdownButton, MenuItem } from 'react-bootstrap'
+import friendlyTime from 'friendly-time'
 
 export default class Table extends Component {
   render() {
@@ -15,13 +16,14 @@ const onClick = () => console.log('reee')
 
 const ListItem = ({item, index, ...props}) => {
   const id = item.id;
+  const time = new Date(item.updated_at)
   return (
     <div className="listview__item">
       <div className="custom-control custom-control--char todo__item">
         <span className="todo__info">
-          <span><strong>{item.title}</strong></span>
+          <span><strong>{item.title}</strong></span><br/>
           <span>{item.description}</span>
-          <small>Today at 8.30 AM</small>
+          <small>{friendlyTime(time)}</small>
         </span>
       </div>
       <div className="actions listview__actions">
@@ -38,25 +40,12 @@ const ListItem = ({item, index, ...props}) => {
     )
 }
 
-const DropDown = () => 
-    <DropdownButton
-      bsStyle={'default'}
-      title={'zz'}
-      key={1}
-      id={1}>
-        <MenuItem eventKey="1">Action</MenuItem>
-        <MenuItem eventKey="2">Another action</MenuItem>
-        <MenuItem eventKey="3" active>
-          Active Item
-        </MenuItem>
-        <MenuItem divider />
-        <MenuItem eventKey="4">Separated link</MenuItem>
-    </DropdownButton>
-
-
 function List({...props}) { 
   const items = props.items.map((item, index) => 
-    <ListItem item={item} index={index} handle={props.handle.bind(this)} key={index}/>
+    <ListItem item={item} 
+              index={index} 
+              handle={props.handle.bind(this)} 
+              key={index}/>
     )
   
   return(

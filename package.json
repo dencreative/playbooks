@@ -23,6 +23,8 @@
     },
     "dependencies": {
         "eslint": "^4.19.1",
+        "friendly-time": "^1.1.1",
+        "pretty-date": "^0.2.0",
         "prop-types": "^15.6.1",
         "react-alert": "^4.0.4",
         "react-alert-template-basic": "^1.0.0",

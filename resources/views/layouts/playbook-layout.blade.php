@@ -148,7 +148,7 @@
                         </div>
                     </div>
 
-                    <button class="btn btn-primary btn--action btn--fixed zmdi zmdi-plus" data-toggle="modal" data-target="#modal-new-todo" style="color:"></button>
+                   <!--  <button class="btn btn-primary btn--action btn--fixed zmdi zmdi-plus" data-toggle="modal" data-target="#modal-new-todo" style="color:"></button> -->
                 </div>
 
                 

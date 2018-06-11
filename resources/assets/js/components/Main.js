@@ -1,10 +1,10 @@
 // Components.
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import {ReadModal, MODALS} from './Modals';
 import ToolBar from './ToolBar';
 import Table from './Table';
 import Alert from './Alert';
+import AbstractModal  from './AbstractModal'
 
 // Utility functions.
 import { sendRequest } from './utils'
@@ -32,7 +32,15 @@ class Main extends Component {
     .then(data => {
       let list = []
       data.map(item => {
-          if (item.description) { list.push({id: item.id, title:item.title, description: item.description}) }
+          if (item.description) { 
+            list.push({
+              id: item.id, 
+              title:item.title, 
+              description: item.description, 
+              created_at: item.created_at,
+              updated_at: item.updated_at
+            }) 
+          }
       })
     // Reverse to make newest entries appear at the top.  
     this.setState({products:list.reverse()})
@@ -139,14 +147,13 @@ class Main extends Component {
     // Decides view: initial (display all) or query (display sorted.)
     const items = (!query) ? this.state.products : this.state.displayItems;
 
-    // Decides the type of modal at runtime.
-    const Modal = (this.state.mode === '') ? ReadModal : MODALS[this.state.mode]
-
+  
     return (
       <div className="todo">
         <div className="card">
 
-          <ToolBar buildList={this.buildList.bind(this)} 
+          <ToolBar total={this.state.products.length}
+                   buildList={this.buildList.bind(this)} 
                    handle={this.handleChange.bind(this)}/>
 
           <Table   items={items}
@@ -154,13 +161,14 @@ class Main extends Component {
           
           <Alert type="danger" warn={this.state.displayItems.length===0 && query}/> 
 
-        <Modal item = {this.state.item}
-               show={this.state.showModal} 
-               handleCloseModal={this.handleCloseModal.bind(this)}
-               removeItem={this.removeItem.bind(this)}
-               updateItem={this.updateItem.bind(this)}
-               addItem={this.addItem.bind(this)}/>
-        </div>
+          <AbstractModal item = {this.state.item}
+                 show={this.state.showModal} 
+                 mode={this.state.mode}
+                 handleCloseModal={this.handleCloseModal.bind(this)}
+                 removeItem={this.removeItem.bind(this)}
+                 updateItem={this.updateItem.bind(this)}
+                 addItem={this.addItem.bind(this)}/>
+          </div>
       </div>
     );
   }
