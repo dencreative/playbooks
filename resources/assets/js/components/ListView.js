@@ -21,7 +21,7 @@ const ListItem = ({item, index, ...props}) => {
         <span className="todo__info">
           <span><strong>{item.title}</strong></span><br/>
           <span>{item.description}</span>
-          <small>{friendlyTime(time)}</small>
+          <small>{friendlyTime(correctTime)}</small>
         </span>
         <Categories categories={['cat1', 'cat2', 'dog0']}/>
       </div>
