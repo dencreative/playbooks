@@ -61,12 +61,6 @@
                                 <div class="user__email">shnikolay@apple.com</div>
                             </div>
                         </div>
-
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="">View Profile</a>
-                            <a class="dropdown-item" href="">Settings</a>
-                            <a class="dropdown-item" href="">Logout</a>
-                        </div>
                     </div>
 
                     <ul class="navigation">
@@ -82,6 +76,10 @@
                                 <li><a href="top-navigation.html">Top Navigation</a></li>
                             </ul>
                         </li>
+
+                        <li><a href="index.html"><i class="zmdi zmdi-square-right"></i> Log Out </a></li>
+
+
                     </ul>
                 </div>
             </aside>

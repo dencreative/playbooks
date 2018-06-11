@@ -2,9 +2,9 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import ToolBar from './ToolBar';
-import Table from './Table';
+import ListView from './ListView';
 import Alert from './Alert';
-import AbstractModal  from './AbstractModal'
+import ModalController  from './ModalController'
 
 // Utility functions.
 import { sendRequest } from './utils'
@@ -151,27 +151,40 @@ class Main extends Component {
     return (
       <div className="todo">
         <div className="card">
-
+         
           <ToolBar total={this.state.products.length}
                    buildList={this.buildList.bind(this)} 
                    handle={this.handleChange.bind(this)}/>
 
-          <Table   items={items}
-                   handle = {this.handleChange.bind(this)}/>
-          
-          <Alert type="danger" warn={this.state.displayItems.length===0 && query}/> 
 
-          <AbstractModal item = {this.state.item}
-                 show={this.state.showModal} 
-                 mode={this.state.mode}
-                 handleCloseModal={this.handleCloseModal.bind(this)}
-                 removeItem={this.removeItem.bind(this)}
-                 updateItem={this.updateItem.bind(this)}
-                 addItem={this.addItem.bind(this)}/>
+          <ListView items={items}
+                    handle = {this.handleChange.bind(this)}/>
+          
+          <Alert type="danger" 
+                 warn={this.state.displayItems.length===0 && query}/> 
+
+          <ModalController item = {this.state.item}
+                           show={this.state.showModal} 
+                           mode={this.state.mode}
+                           handleCloseModal={this.handleCloseModal.bind(this)}
+                           removeItem={this.removeItem.bind(this)}
+                           updateItem={this.updateItem.bind(this)}
+                           addItem={this.addItem.bind(this)}/>
           </div>
+
+          <AddButton handle={this.handleChange.bind(this, 'write')}/>
+
       </div>
     );
   }
+}
+
+const AddButton = (props) => {
+  return (
+    <button className="btn btn-primary btn--action btn--fixed zmdi zmdi-plus"
+         onClick={props.handle.bind(this, 'write')}> 
+    </button>
+    )
 }
 
 export default Main;

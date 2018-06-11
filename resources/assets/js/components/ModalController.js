@@ -5,7 +5,7 @@ import { Modal } from 'react-bootstrap'
 import FieldGroup from './FieldGroup'
 import { Write, Read, Delete, Edit } from './Modals'
 
-export default class AbstractModal extends Modal {
+export default class ModalController extends Modal {
 
     constructor(props) {
         super(props)

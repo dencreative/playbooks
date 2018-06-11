@@ -13,9 +13,15 @@
 
 //Route::get('/', 'SlackController@test');
 Route::resource('/', 'PlaybookController');
+
 Route::get('/example', function () {
     return view('playbook');
 });
+
+Route::get('/home', function () {
+    return view('home');
+});
+
 
 
 Auth::routes();

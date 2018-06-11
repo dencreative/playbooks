@@ -4,21 +4,20 @@ import ReactDOM from 'react-dom';
 
 export default function ToolBar(props) {
 
-  const onClick = () => props.handle.bind(this, 'write')
+  const onClick = () => console.log('resort list here')
 	
   return(
 
 		<div className="toolbar toolbar--inner">
       <div className="toolbar__label">{props.total} Entries</div>
-
       <div className="actions">
           <i className="actions__item zmdi zmdi-search" data-ma-action="toolbar-search-open"></i>
           <div className="dropdown actions__item">
               <i className="zmdi zmdi-sort" data-toggle="dropdown"></i>
 
               <div className="dropdown-menu dropdown-menu-right">
-                  <a href="" className="dropdown-item">Newest to Oldest</a>
-                  <a href="" className="dropdown-item">Oldest to Newest</a>
+                  <a className="dropdown-item" onClick={onClick.bind(this)}>Newest to Oldest</a>
+                  <a className="dropdown-item" onClick={onClick.bind(this)}>Oldest to Newest</a>
               </div>
           </div>
       </div>
@@ -31,10 +30,6 @@ export default function ToolBar(props) {
 
           <i className="toolbar__search__close zmdi zmdi-long-arrow-left" data-ma-action="toolbar-search-close"></i>
       </div>
-
-       <button className="btn btn-primary btn--action btn--fixed zmdi zmdi-plus"
-               onClick={props.handle.bind(this, 'write')}> 
-        </button>
   </div>
 	)
 }

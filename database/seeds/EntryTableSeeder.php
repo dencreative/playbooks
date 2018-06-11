@@ -14,7 +14,7 @@ class EntryTableSeeder extends Seeder
     {
         $faker = \Faker\Factory::create();
 
-        for ($i = 0; $i < 50; $i++) {
+        for ($i = 0; $i < 1000; $i++) {
           Entry::create([
             'title' => $faker->title,
             'description' => $faker->paragraph,

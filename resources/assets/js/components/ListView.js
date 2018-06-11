@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { DropdownButton, MenuItem } from 'react-bootstrap'
 import friendlyTime from 'friendly-time'
 
-export default class Table extends Component {
+export default class ListView extends Component {
   render() {
   	return(
       <List items={this.props.items}
@@ -11,8 +11,6 @@ export default class Table extends Component {
   	)
   }
 }
-
-const onClick = () => console.log('reee')
 
 const ListItem = ({item, index, ...props}) => {
   const id = item.id;
@@ -25,6 +23,7 @@ const ListItem = ({item, index, ...props}) => {
           <span>{item.description}</span>
           <small>{friendlyTime(time)}</small>
         </span>
+        <Categories categories={['cat1', 'cat2', 'dog0']}/>
       </div>
       <div className="actions listview__actions">
         <div className="dropdown actions__item">
@@ -37,6 +36,19 @@ const ListItem = ({item, index, ...props}) => {
         </div>
       </div>
     </div>
+    )
+}
+
+function Categories({categories}) {
+
+  const renderCategories = () => {
+    return categories.map((c, i)=> <span key={i}>{c}</span>)
+  }
+
+  return (
+    <span className="listview__attrs">
+      {renderCategories()}
+    </span>
     )
 }
 
