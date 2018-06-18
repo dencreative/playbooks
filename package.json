@@ -9,29 +9,29 @@
         "prod": "npm run production",
         "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
     },
-    "devDependencies": {
+    "dependencies": {
         "axios": "^0.18",
         "babel-preset-react": "^6.23.0",
         "bootstrap": "^3.3.7",
         "cross-env": "^5.1",
+        "datatables": "^1.10.13",
+        "eslint": "^4.19.1",
+        "friendly-time": "^1.1.1",
         "jquery": "^3.2",
         "laravel-mix": "^2.0",
         "lodash": "^4.17.4",
         "popper.js": "^1.12",
-        "react": "^16.4.0",
-        "react-dom": "^16.2.0"
-    },
-    "dependencies": {
-        "eslint": "^4.19.1",
-        "friendly-time": "^1.1.1",
         "pretty-date": "^0.2.0",
         "prop-types": "^15.6.1",
+        "react": "^16.4.0",
         "react-alert": "^4.0.4",
         "react-alert-template-basic": "^1.0.0",
         "react-bootstrap": "^0.32.1",
         "react-confirm-alert": "^2.0.2",
+        "react-dom": "^16.2.0",
         "react-image-placeholder": "^1.0.4",
         "react-transition-group": "^2.3.1",
-        "react-virtualized": "^9.19.1"
+        "react-virtualized": "^9.19.1",
+        "trumbowyg": "^2.10.0"
     }
 }

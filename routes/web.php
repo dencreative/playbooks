@@ -11,21 +11,9 @@
 |
 */
 
-//Route::get('/', 'SlackController@test');
-Route::resource('/', 'PlaybookController');
-
-Route::get('/example', function () {
-    return view('playbook');
-});
-
-Route::get('/home', function () {
-    return view('home');
-});
-
-
-
 Auth::routes();
 
-Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/', 'DashboardController@index');
+Route::resource('/playbooks', 'EntryController');
+

@@ -1,26 +1,83 @@
-.buttons {
-	display:flex;
-	flex-direction:row;
-	justify-content:flex-end;
+@import "../../../node_modules/trumbowyg/dist/ui/trumbowyg.min.css";
+
+.categories-select {
+    z-index:13;
+    width:100%;
 }
 
-table.playbook-table {
-	margin: 1.5rem 0;
+.trumbowyg-button-pane {
+    z-index:0;
 }
 
-.row .buttons {
-	justify-content:flex-end;
-
+.no-padding {
+    padding: 0!important;
 }
 
-.row .buttons * {
-	margin-left:5px;
+.no-border {
+    border: 0!important;
 }
 
-table .buttons * {
-	margin-right:5px;
+form>.btn-delete:link {
+    color:red;
 }
 
-.modal-backdrop {
-    opacity:0.5 !important;
+.no-pointer-events {
+    pointer-events:none;
 }
+
+.actions {
+    text-align:center;
+    margin:0;
+}
+
+table .actions i {
+    height:47px;
+    line-height: 47px;
+    color:#f9a900;
+}
+
+.icon:nth-child(2) {
+    border-left:1px solid white;
+}
+
+
+.icon {
+    border-top:1px solid white;
+    background-color:#252525;
+    transition: background-color 0.3s linear 0s;
+    text-align:center;
+}
+
+#new-item {
+    border:none;
+    transition: background-color 0.3s linear 0s;
+    background-color:#33c786;
+}
+
+.icon.delete {
+    border-left:1px solid white;
+    background-color:#ff6a67;
+    opacity:1;
+}
+
+.icon.delete i, #new-item i {
+    color:white;
+}
+
+.icon:hover {
+    background-color:#515151;
+}
+
+.icon.delete:hover {
+    background-color:#ff5f5b;
+}
+
+#new-item:hover {
+    background-color:#38b17d;
+}
+
+.paginate_button.current {
+    background-color:#f9a900 !important;
+}
+
+

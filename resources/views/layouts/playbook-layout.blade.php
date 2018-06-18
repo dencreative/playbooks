@@ -9,13 +9,19 @@
         <link rel="stylesheet" href="/backend/vendors/bower_components/animate.css/animate.min.css">
         <link rel="stylesheet" href="/backend/vendors/bower_components/jquery.scrollbar/jquery.scrollbar.css">
         <link rel="stylesheet" href="/backend/vendors/bower_components/select2/dist/css/select2.min.css">
-
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+         
+         
         <!-- App styles -->
         <link rel="stylesheet" href="/backend/css/app.min.css">
-        <link rel="stylesheet" href="/backend/css/custom.css">
+        <link rel="stylesheet" href="/css/app.css">
 
         <!-- CSRF Token -->
         <meta name="csrf-token" content="{{ csrf_token() }}">
+        <script>
+         var CSRF_TOKEN = '{{ csrf_token() }}';
+        </script>
+
     </head>
 
     <title>Den Playbooks</title>
@@ -30,123 +36,26 @@
                 </div>
             </div>
 
-            <header class="header row" style="background-color: #252525;">
-                <div class="navigation-trigger hidden-xl-up " data-ma-action="aside-open" data-ma-target=".sidebar">
-                    <div class="navigation-trigger__inner">
-                        <i class="navigation-trigger__line"></i>
-                        <i class="navigation-trigger__line"></i>
-                        <i class="navigation-trigger__line"></i>
-                    </div>
-                </div>
+            @include('partials.header')
 
-                <div class="header__logo hidden-sm-down col-md-2 col-sm-12 col-xs-12">
-                    <h1><a href="index.html"><img src="https://www.elixirr.com/wp-content/themes/elixirr/img/elixirr_logo_darkbckgrnd.svg" style="width: 100%;"/></a></h1>
-                </div>
-
-                <form class="search col-md-10">
-                    <div class="search__inner">
-                        <input type="text" class="search__text" placeholder="Search for people, files, documents...">
-                        <i class="zmdi zmdi-search search__helper" data-ma-action="search-close"></i>
-                    </div>
-                </form>
-            </header>
-
-            <aside class="sidebar">
-                <div class="scrollbar-inner">
-                    <div class="user">
-                        <div class="user__info" data-toggle="dropdown">
-                            <img class="user__img" src="/backend/demo/img/profile-pics/8.jpg" alt="">
-                            <div>
-                                <div class="user__name">Nikolay Alexandrov</div>
-                                <div class="user__email">shnikolay@apple.com</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <ul class="navigation">
-                        <li><a href="index.html"><i class="zmdi zmdi-home"></i> Playbooks </a></li>
-
-                        <li class="navigation__sub">
-                            <a href=""><i class="zmdi zmdi-view-week"></i> Variants</a>
-
-                            <ul>
-                                <li><a href="hidden-sidebar.html">Hidden Sidebar</a></li>
-                                <li><a href="boxed-layout.html">Boxed Layout</a></li>
-                                <li><a href="hidden-sidebar-boxed-layout.html">Boxed Layout with Hidden Sidebar</a></li>
-                                <li><a href="top-navigation.html">Top Navigation</a></li>
-                            </ul>
-                        </li>
-
-                        <li><a href="index.html"><i class="zmdi zmdi-square-right"></i> Log Out </a></li>
-
-
-                    </ul>
-                </div>
-            </aside>
+            @include('partials.sidebar')
 
             <section class="content">
                 <div class="content__inner">
                     <header class="content__title">
-                        <h1>Playbooks</h1>
-                        <small>Below is the list of playbooks.</small>
+                        @yield('header')
                     </header>
+            
 
-                    <div class="row todo">
-                        <div class="col-md-12">
-                            <div class="card">
-                                @yield('content')
-                            </div>
-                        </div>
+                    @include('partials.errors')
+                    
+                    <div class="card row">
+                         @yield('content')
+                        
                     </div>
 
-                    <div class="modal fade show" id="modal-new-todo" tabindex="-1">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title">New Todo List</h5>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" placeholder="What do you want to do?">
-                                    </div>
-
-                                    <div class="form-group select2-parent">
-                                        <select class="select2">
-                                            <option>Select a Label</option>
-                                            <option>#Messages</option>
-                                            <option>#Clients</option>
-                                            <option>#Server</option>
-                                            <option>#Marketing</option>
-                                            <option>#Work Related</option>
-                                            <option>#Website</option>
-                                        </select>
-                                    </div>
-
-                                    <div class="form-group mb-0">
-                                        <label>Set Priority</label>
-
-                                        <div class="btn-group btn-group-toggle btn-group-justified" data-toggle="buttons">
-                                            <label class="btn active">
-                                                <input type="radio" name="options" id="option1" autocomplete="off" checked> !
-                                            </label>
-                                            <label class="btn">
-                                                <input type="radio" name="options" id="option2" autocomplete="off"> !!
-                                            </label>
-                                            <label class="btn">
-                                                <input type="radio" name="options" id="option3" autocomplete="off"> !!!
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-link">Save</button>
-                                    <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                   <!--  <button class="btn btn-primary btn--action btn--fixed zmdi zmdi-plus" data-toggle="modal" data-target="#modal-new-todo" style="color:"></button> -->
+                    @include('partials.modals.delete')
+                
                 </div>
 
                 
@@ -214,8 +123,15 @@
         <script src="/backend/vendors/bower_components/jquery.scrollbar/jquery.scrollbar.min.js"></script>
         <script src="/backend/vendors/bower_components/jquery-scrollLock/jquery-scrollLock.min.js"></script>
 
+        <script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+
         <!-- App functions and actions -->
         <script src="/backend/js/app.min.js"></script>
+        <script src="{{ asset('js/wysiwyg-editor.js') }}"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+
+        @yield('js')
         
 
     </body>

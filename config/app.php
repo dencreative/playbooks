@@ -147,9 +147,13 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
 
+        // Slack API
+        Vluzrmos\SlackApi\SlackApiServiceProvider::class,
+
         /*
          * Package Service Providers...
          */
+        Clockwork\Support\Laravel\ClockworkServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -182,6 +186,7 @@ return [
         'Broadcast' => Illuminate\Support\Facades\Broadcast::class,
         'Bus' => Illuminate\Support\Facades\Bus::class,
         'Cache' => Illuminate\Support\Facades\Cache::class,
+        'Clockwork' => Clockwork\Support\Laravel\Facade::class,
         'Config' => Illuminate\Support\Facades\Config::class,
         'Cookie' => Illuminate\Support\Facades\Cookie::class,
         'Crypt' => Illuminate\Support\Facades\Crypt::class,
@@ -208,6 +213,21 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+
+        // Slack API
+        
+        'SlackApi'              => Vluzrmos\SlackApi\Facades\SlackApi::class,
+        'SlackChannel'          => Vluzrmos\SlackApi\Facades\SlackChannel::class,
+        'SlackChat'             => Vluzrmos\SlackApi\Facades\SlackChat::class,
+        'SlackGroup'            => Vluzrmos\SlackApi\Facades\SlackGroup::class,
+        'SlackFile'             => Vluzrmos\SlackApi\Facades\SlackFile::class,
+        'SlackSearch'           => Vluzrmos\SlackApi\Facades\SlackSearch::class,
+        'SlackInstantMessage'   => Vluzrmos\SlackApi\Facades\SlackInstantMessage::class,
+        'SlackUser'             => Vluzrmos\SlackApi\Facades\SlackUser::class,
+        'SlackStar'             => Vluzrmos\SlackApi\Facades\SlackStar::class,
+        'SlackUserAdmin'        => Vluzrmos\SlackApi\Facades\SlackUserAdmin::class,
+        'SlackRealTimeMessage'  => Vluzrmos\SlackApi\Facades\SlackRealTimeMessage::class,
+        'SlackTeam'             => Vluzrmos\SlackApi\Facades\SlackTeam::class,
 
     ],
 

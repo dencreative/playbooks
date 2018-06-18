@@ -1,18 +1,5 @@
 <?php
 
-/**
-** Basic Routes for a RESTful service:
-**
-** Route::get($uri, $callback);
-** Route::post($uri, $callback);
-** Route::put($uri, $callback);
-** Route::delete($uri, $callback);
-**
-**/
-
-use Illuminate\Http\Request;
-use App\Entry;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -23,12 +10,3 @@ use App\Entry;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::get('entries', 'EntryController@index');
- 
-Route::get('entries/{entry}', 'EntryController@show');
- 
-Route::post('entries','EntryController@store');
- 
-Route::put('entries/{entry}','EntryController@update');
- 
-Route::delete('entries/{entry}', 'EntryController@delete');
